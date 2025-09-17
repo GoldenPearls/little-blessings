@@ -33,9 +33,10 @@
 /* ====== PAGE ====== */
 body {
   font-family: 'Noto Sans KR', sans-serif;
-  background: radial-gradient(1000px 600px at 50% -200px, #E9D5FF 0%, rgba(233,213,255,0) 60%),
-              radial-gradient(900px 500px at 20% 120%, #C7F0E9 0%, rgba(199,240,233,0) 65%),
-              linear-gradient(135deg, #CBE8E4 0%, #FFF9E6 25%, #E6DFF5 50%, #F8D6C2 75%, #CBE8E4 100%);
+  background:
+    radial-gradient(1000px 600px at 50% -200px, #E9D5FF 0%, rgba(233,213,255,0) 60%),
+    radial-gradient(900px 500px at 20% 120%, #C7F0E9 0%, rgba(199,240,233,0) 65%),
+    linear-gradient(135deg, #CBE8E4 0%, #FFF9E6 25%, #E6DFF5 50%, #F8D6C2 75%, #CBE8E4 100%);
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -46,17 +47,8 @@ body {
 }
 
 /* 떠다니는 파티클 */
-.particles {
-  position: fixed; inset: 0;
-  pointer-events: none;
-  z-index: 0;
-}
-.particle {
-  position: absolute;
-  font-size: 1.2rem;
-  opacity: 0.4;
-  animation: floatParticle 12s ease-in-out infinite;
-}
+.particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+.particle { position: absolute; font-size: 1.2rem; opacity: 0.4; animation: floatParticle 12s ease-in-out infinite; }
 @keyframes floatParticle {
   0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0; }
   10%, 90% { opacity: 0.6; }
@@ -65,8 +57,7 @@ body {
 
 /* ====== APP CARD ====== */
 .container {
-  max-width: 380px;
-  width: 90%;
+  max-width: 380px; width: 90%;
   background: rgba(255, 255, 255, 0.95);
   border-radius: 30px;
   padding: 35px 25px;
@@ -163,7 +154,7 @@ body {
   100%{ opacity: 0; transform: scale(0); }
 }
 
-/* 메인 버튼(핑크 → 라벤더/블루로 톤 다운) */
+/* 메인 버튼 (폰트 적용 포함) */
 .main-button {
   background: linear-gradient(145deg, #C7D2FE, #E9D5FF);
   border: none; border-radius: 25px;
@@ -173,8 +164,9 @@ body {
   box-shadow: 0 8px 25px rgba(201, 180, 255, .35);
   transition: all .35s cubic-bezier(0.175,0.885,0.32,1.275);
   border: 3px solid rgba(255,255,255,.55);
-  position: relative; overflow: hidden;
-  white-space: nowrap;
+  position: relative; overflow: hidden; white-space: nowrap;
+  font-family: 'MitmiFont','Noto Sans KR',sans-serif;  /* ✅ 요청폰트 */
+  letter-spacing: .2px;
 }
 .main-button:hover {
   transform: translateY(-4px) scale(1.03);
@@ -230,64 +222,55 @@ body {
 .cat-nose { width:4px; height:3px; background:#E9D5FF; border-radius:50%; margin:0 auto 4px; }
 .cat-mouth { width:12px; height:6px; border:2px solid #2d3436; border-top:none; border-radius:0 0 12px 12px; margin:0 auto; }
 
-/* ====== 카드(가운데 정렬) ====== */
+/* ====== 카드 (라벨을 요소로, 중앙 정렬 강화) ====== */
 .blessing-card {
-  --label-h: 28px;            /* 라벨 높이(+여백) */
-  --card-min-h: 320px;        /* 카드 최소 높이 */
+  /* 기존 카드 설정 유지 + 가운데 정렬 강화 */
   position: relative;
-  min-height: var(--card-min-h);
-  padding: calc(var(--label-h) + 24px) 20px 28px; /* 라벨 공간 + 상단 여백 */
+  min-height: 320px;
+  padding: 28px 20px 28px;           /* 위/아래 균등 패딩 */
   border-radius: 20px;
   background: linear-gradient(135deg, rgba(255, 249, 230, 0.95), rgba(248, 214, 194, 0.9));
   border: 3px solid rgba(248, 214, 194, 0.6);
 
-  display: flex;              /* 핵심 */
+  display: flex;
   flex-direction: column;
-  justify-content: center;    /* 세로 가운데 */
-  align-items: center;        /* 가로 가운데 */
+  justify-content: center;            /* 세로 가운데 */
+  align-items: center;                /* 가로 가운데 */
   gap: 16px;
 }
-
-/* 라벨: 텍스트만, 라벤더 톤 */
-.blessing-card::before {
-  content: '오늘의 작은 축복';
-  position: absolute;
-  top: -2px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #B39DDB;       /* 라벨 색상 (#F8A5C2 → 교체) */
+/* 기존 ::before 라벨 제거 */
+.blessing-card::before { content: none !important; }
+/* 새 라벨 요소 */
+.card-label{
+  align-self: center;
+  background: #B39DDB;               /* 라벤더 */
   color: #fff;
   padding: 6px 16px;
-  line-height: 1;
   border-radius: 16px;
   font-size: 0.82rem;
   font-weight: 700;
+  line-height: 1;
   box-shadow: 0 2px 6px rgba(0,0,0,.08);
+  margin-top: -6px;                   /* 살짝 위로 */
 }
 
 /* 카드 내부 요소 */
 .blessing-content { text-align: center; margin: 0; }
 .blessing-emoji {
   font-family: var(--emoji-fonts), system-ui, -apple-system, 'Noto Sans KR', sans-serif;
-  font-size: 2.6rem;
-  line-height: 1;
+  font-size: 2.6rem; line-height: 1;
 }
 .blessing-text {
   font-family: 'OngleebDaisy','Noto Sans KR', var(--emoji-fonts), system-ui, sans-serif;
-  font-size: 1.05rem;
-  line-height: 1.55;
-  color: #4A5C6A;
-  font-weight: 500;
+  font-size: 1.05rem; line-height: 1.55;
+  color: #4A5C6A; font-weight: 500;
 }
 
 /* 행운 정보 그리드 */
 .fortune-info {
-  width: 100%;
-  max-width: 420px;               /* 너무 넓어지지 않게 */
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin: 4px 0 0;
+  width: 100%; max-width: 420px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 12px; margin: 4px 0 0;
 }
 .fortune-item {
   background: rgba(255,255,255,.85);
@@ -297,77 +280,51 @@ body {
   border: 2px solid rgba(203,232,228,.5);
 }
 .fortune-label {
-  font-size: .75rem;
-  color: #6B7684;
-  margin-bottom: 5px;
-  font-weight: 600;
+  font-size: .75rem; color: #6B7684; margin-bottom: 5px; font-weight: 600;
 }
 .fortune-value {
-  font-size: .92rem;
-  color: #8B7355;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
+  font-size: .92rem; color: #8B7355; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  gap: 10px;                          /* ✅ 간격 업 */
 }
-.fortune-icon { font-size: 1rem; }
+.fortune-icon { font-size: 1.05rem; transform: translateY(1px); }
 
 /* ====== ACTION BUTTONS ====== */
 .action-buttons {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
-  margin-top: 20px;
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px; margin-top: 20px;
 }
-
 .action-button {
-  font-family:'Noto Sans KR', sans-serif;
+  font-family: 'MitmiFont','Noto Sans KR',sans-serif; /* ✅ 버튼 폰트 */
   background: rgba(255,255,255,.85);
-  border: 2px solid #CBE8E4;
-  border-radius: 15px;
+  border: 2px solid #CBE8E4; border-radius: 15px;
   padding: 12px 14px;
-  font-size: clamp(.80rem, 2.2vw, .95rem); /* 화면에 맞춰 자동 축소 */
+  font-size: clamp(.80rem, 2.2vw, .95rem);
   line-height: 1;
-  cursor: pointer;
-  color: #4A5C6A;
-  font-weight: 700;
+  cursor: pointer; color: #4A5C6A; font-weight: 700;
   transition: all .25s ease;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  white-space: nowrap;       /* 두 줄 방지 */
-  min-width: 0;              /* 그리드 안 수축 허용 */
-  overflow: hidden;
-  text-overflow: ellipsis;
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 6px; white-space: nowrap; min-width: 0; overflow: hidden; text-overflow: ellipsis;
+  letter-spacing: .2px;
 }
 .action-button:hover {
   background: rgba(203,232,228,.9);
-  border-color: #8B7355;
-  color: #8B7355;
+  border-color: #8B7355; color: #8B7355;
   transform: translateY(-2px);
 }
 .retry-button { background: linear-gradient(145deg, #E6DFF5, #CBE8E4); border-color: transparent; }
 .save-button  { background: linear-gradient(145deg, #F8E7D8, #EAD4C3); border-color: transparent; }
 
-/* 버튼 내부 아이콘/텍스트(선택적으로 HTML에 사용 가능) */
 .btn-ic { font-family: var(--emoji-fonts), 'Noto Sans KR', sans-serif; }
 .btn-txt { white-space: nowrap; }
 
-/* 아주 좁은 화면에서 텍스트 숨기기(선택) */
-@media (max-width: 340px) {
-  .btn-txt { display: none; }
-  .action-button { padding: 12px; }
+@media (max-width: 340px){
+  .btn-txt{ display:none; }
+  .action-button{ padding:12px; }
 }
 
 /* ====== FOOTER ====== */
-.footer {
-  margin-top: 20px;
-  font-size: .75rem;
-  color: #A8B2C0;
-  line-height: 1.4;
-}
+.footer { margin-top: 20px; font-size: .75rem; color: #A8B2C0; line-height: 1.4; }
 
 /* ====== SCREEN TRANSITION ====== */
 .screen-transition { animation: screenFadeIn 0.9s ease-in-out; }
