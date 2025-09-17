@@ -1,0 +1,269 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+/* === 요청한 손글씨 폰트 3종 === */
+@font-face {
+  font-family: 'OngleipParkDahyeon';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2411-3@1.0/Ownglyph_ParkDaHyun.woff2') format('woff2');
+  font-weight: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'OngleebDaisy';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2508-2@1.0/Ownglyph_daisy-Rg.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'MitmiFont';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_1@1.0/Ownglyph_meetme-Rg.woff2') format('woff2');
+  font-weight: normal;
+  font-display: swap;
+}
+
+/* Reset-ish */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: linear-gradient(135deg, #CBE8E4 0%, #FFF9E6 25%, #E6DFF5 50%, #F8D6C2 75%, #CBE8E4 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4A5C6A;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* 떠다니는 파티클 */
+.particles {
+  position: fixed; inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.particle {
+  position: absolute;
+  font-size: 1.2rem;
+  opacity: 0.4;
+  animation: floatParticle 12s ease-in-out infinite;
+}
+@keyframes floatParticle {
+  0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0; }
+  10%, 90% { opacity: 0.6; }
+  50% { transform: translateY(-120px) rotate(180deg); opacity: 1; }
+}
+
+/* 카드 컨테이너 */
+.container {
+  max-width: 380px; width: 90%;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 30px;
+  padding: 35px 25px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  backdrop-filter: blur(15px);
+  border: 3px solid rgba(255,255,255,0.6);
+  position: relative; z-index: 1;
+  text-align: center; overflow: hidden;
+}
+
+.header { margin-bottom: 25px; }
+
+.title {
+  font-family: 'OngleipParkDahyeon', 'Noto Sans KR', sans-serif;
+  font-size: 2.15rem;
+  font-weight: 700;
+  color: #8B7355;
+  margin-bottom: 8px;
+  letter-spacing: .5px;
+}
+.subtitle {
+  font-family: 'MitmiFont', 'Noto Sans KR', sans-serif;
+  font-size: 0.95rem; color: #6B7684; font-weight: 400; line-height: 1.4;
+}
+
+/* 첫 화면 */
+.gift-box-screen { display: block; }
+.gift-box-container {
+  position: relative; width: 200px; height: 200px;
+  margin: 0 auto 25px;
+  animation: giftFloat 3s ease-in-out infinite;
+}
+@keyframes giftFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* 선물상자 */
+.gift-box {
+  width: 140px; height: 120px;
+  background: linear-gradient(145deg, #F8D6C2, #E6C3A6);
+  border-radius: 15px;
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  border: 4px solid rgba(255,255,255,0.9);
+  box-shadow: 0 15px 40px rgba(230,195,166,0.4);
+  transition: all .6s cubic-bezier(0.175,0.885,0.32,1.275);
+}
+.gift-ribbon-h {
+  position: absolute; top: 50%; left: 0; right: 0; height: 20px;
+  transform: translateY(-50%);
+  background: linear-gradient(145deg, #F8A5C2, #E91E63);
+  border-radius: 2px; box-shadow: 0 4px 15px rgba(233,30,99,.3);
+}
+.gift-ribbon-v {
+  position: absolute; left: 50%; top: 0; bottom: 0; width: 20px;
+  transform: translateX(-50%);
+  background: linear-gradient(145deg, #F8A5C2, #E91E63);
+  border-radius: 2px; box-shadow: 0 4px 15px rgba(233,30,99,.3);
+}
+.gift-bow {
+  position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
+  width: 40px; height: 25px;
+  background: linear-gradient(145deg, #F8A5C2, #E91E63);
+  border-radius: 50% 50% 20% 20%;
+  border: 3px solid rgba(255,255,255,0.8);
+  box-shadow: 0 8px 20px rgba(233,30,99,.4);
+}
+.gift-bow::before, .gift-bow::after {
+  content: ''; position: absolute; top: 50%; width: 15px; height: 20px;
+  background: linear-gradient(145deg, #F8A5C2, #E91E63);
+  border-radius: 50%; transform: translateY(-50%);
+}
+.gift-bow::before { left: -8px; transform: translateY(-50%) rotate(-20deg); }
+.gift-bow::after  { right: -8px; transform: translateY(-50%) rotate(20deg); }
+.gift-box.opening { animation: boxShake .8s ease-in-out; }
+@keyframes boxShake {
+  0%,100% { transform: translate(-50%,-50%) rotate(0); }
+  10% { transform: translate(-50%,-50%) rotate(-2deg) scale(1.05); }
+  20% { transform: translate(-50%,-50%) rotate(2deg) scale(1.10); }
+  30% { transform: translate(-50%,-50%) rotate(-2deg) scale(1.05); }
+  40% { transform: translate(-50%,-50%) rotate(2deg) scale(1.10); }
+  50% { transform: translate(-50%,-50%) rotate(-1deg) scale(1.05); }
+  60% { transform: translate(-50%,-50%) rotate(1deg) scale(1.02); }
+  80% { transform: translate(-50%,-50%) rotate(0) scale(1.00); }
+}
+.gift-box-container.disappear { animation: disappear 1s ease-in-out forwards; }
+@keyframes disappear {
+  0% { opacity: 1; transform: scale(1); }
+  50% { opacity: .7; transform: scale(1.2); }
+  100% { opacity: 0; transform: scale(0); }
+}
+
+/* 버튼 */
+.main-button {
+  background: linear-gradient(145deg, #F8A5C2, #E6DFF5);
+  border: none; border-radius: 25px;
+  padding: 18px 30px;
+  font-size: 1.25rem; font-weight: 600; color: #8B7355;
+  cursor: pointer; margin: 20px 0;
+  box-shadow: 0 8px 25px rgba(248,165,194,.4);
+  transition: all .4s cubic-bezier(0.175,0.885,0.32,1.275);
+  border: 3px solid rgba(255,255,255,.5);
+  position: relative; overflow: hidden;
+}
+.main-button:hover {
+  transform: translateY(-6px) scale(1.05);
+  box-shadow: 0 15px 45px rgba(248,165,194,.5);
+}
+.button-icon { display: inline-block; margin-left: 8px; animation: giftBounce 2s ease-in-out infinite; }
+@keyframes giftBounce { 0%,100% { transform: scale(1);} 50% { transform: scale(1.15);} }
+
+/* 결과 화면 */
+.result-screen { display: none; }
+.cat-character { width: 120px; height: 140px; margin: 0 auto 20px; position: relative; animation: resultFloat 3s ease-in-out infinite; }
+@keyframes resultFloat { 0%,100% { transform: translateY(0);} 50% { transform: translateY(-10px);} }
+
+.lucky-bag {
+  width: 100px; height: 110px;
+  background: linear-gradient(145deg, #F8D6C2, #E6C3A6);
+  border-radius: 50px 50px 20px 20px;
+  position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
+  border: 3px solid rgba(255,255,255,.9);
+  box-shadow: 0 10px 30px rgba(230,195,166,.4);
+}
+.lucky-bag::before{
+  content:''; position:absolute; top:-12px; left:50%; transform:translateX(-50%);
+  width:70px; height:18px; background:#D4B896; border-radius:9px; border:2px solid rgba(255,255,255,.9);
+}
+.lucky-bag::after{
+  content:'福'; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  font-size:1.8rem; font-weight:bold; color:#8B7355; text-shadow:2px 2px 4px rgba(0,0,0,.2);
+}
+
+.cat-head {
+  width: 70px; height: 60px;
+  background: linear-gradient(145deg,#A8A8A8,#8D8D8D);
+  border-radius: 35px 35px 30px 30px;
+  position: absolute; top: -5px; left: 50%; transform: translateX(-50%);
+  border: 2px solid rgba(255,255,255,.9); box-shadow: 0 5px 15px rgba(141,141,141,.3);
+}
+.cat-head::before, .cat-head::after {
+  content:''; position:absolute; width:18px; height:22px; top:-12px;
+  background: linear-gradient(145deg,#A8A8A8,#8D8D8D);
+  border-radius: 50% 50% 0 0; border: 2px solid rgba(255,255,255,.9);
+}
+.cat-head::before{ left:15px; transform: rotate(-18deg); }
+.cat-head::after{ right:15px; transform: rotate(18deg); }
+.cat-face { position:absolute; top:55%; left:50%; transform: translate(-50%,-50%); }
+.cat-eyes { display:flex; gap:12px; margin-bottom:8px; justify-content:center; }
+.cat-eye { width:8px; height:10px; background:#2d3436; border-radius:50%; position:relative; }
+.cat-eye::before{ content:''; position:absolute; top:1px; right:1px; width:3px; height:4px; background:white; border-radius:50%; }
+.cat-nose { width:4px; height:3px; background:#F8A5C2; border-radius:50%; margin:0 auto 4px; }
+.cat-mouth { width:12px; height:6px; border:2px solid #2d3436; border-top:none; border-radius:0 0 12px 12px; margin:0 auto; }
+
+.water-drops { position:absolute; inset:0; }
+.water-drop { position:absolute; color:#7DD3FC; font-size:1.2rem; animation: dropFall 2s ease-in-out infinite; }
+.water-drop:nth-child(1){ top:30px; left:30px; animation-delay:0s; }
+.water-drop:nth-child(2){ top:40px; right:35px; animation-delay:.7s; }
+@keyframes dropFall { 0%,100% { transform: translateY(0); opacity:.7;} 50% { transform: translateY(15px); opacity:1;} }
+
+.blessing-card {
+  background: linear-gradient(135deg, rgba(255,249,230,.95), rgba(248,214,194,.9));
+  border-radius:20px; padding:20px; margin:20px 0;
+  border:3px solid rgba(248,214,194,.6); position:relative; overflow:hidden;
+}
+.blessing-card::before{
+  content:'✨ 오늘의 작은 축복 ✨';
+  position:absolute; top:-2px; left:50%; transform:translateX(-50%);
+  background:#F8A5C2; color:#fff; padding:5px 15px; border-radius:15px; font-size:.8rem; font-weight:600;
+}
+.blessing-content { margin-top:15px; text-align:center; }
+.blessing-emoji { font-size:2.5rem; margin-bottom:10px; display:block; }
+.blessing-text {
+  font-family: 'OngleebDaisy','Noto Sans KR',sans-serif;
+  font-size: 1.05rem; line-height:1.5; color:#4A5C6A; font-weight:500; margin-bottom:15px;
+}
+
+.fortune-info { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:15px 0; }
+.fortune-item { background: rgba(255,255,255,.8); border-radius:12px; padding:12px 8px; text-align:center; border:2px solid rgba(203,232,228,.5); }
+.fortune-label { font-family:'Noto Sans KR', sans-serif; font-size:.75rem; color:#6B7684; margin-bottom:5px; font-weight:500; }
+.fortune-value { font-family:'Noto Sans KR', sans-serif; font-size:.9rem; color:#8B7355; font-weight:600; display:flex; align-items:center; justify-content:center; gap:4px; }
+.fortune-icon { font-size:1rem; }
+
+.action-buttons { display:flex; gap:10px; margin-top:20px; justify-content:center; }
+.action-button {
+  font-family:'Noto Sans KR', sans-serif;
+  background: rgba(255,255,255,.8);
+  border:2px solid #CBE8E4; border-radius:15px; padding:10px 16px;
+  font-size:.85rem; cursor:pointer; transition: all .3s ease; color:#4A5C6A; font-weight:500;
+}
+.action-button:hover { background: rgba(203,232,228,.9); border-color:#8B7355; color:#8B7355; transform: translateY(-2px); }
+.retry-button { background: linear-gradient(145deg, #E6DFF5, #CBE8E4); border-color: transparent; }
+.save-button  { background: linear-gradient(145deg, #F8D6C2, #E6C3A6); border-color: transparent; }
+
+.footer { margin-top:20px; font-size:.75rem; color:#A8B2C0; line-height:1.4; }
+
+/* 화면 전환 */
+.screen-transition { animation: screenFadeIn 1s ease-in-out; }
+@keyframes screenFadeIn {
+  0% { opacity:0; transform: translateY(30px) scale(.9); }
+  100% { opacity:1; transform: translateY(0) scale(1); }
+}
+
+/* 반응형 */
+@media (max-width: 480px) {
+  .container { padding: 25px 20px; margin: 10px; }
+  .gift-box-container { width: 180px; height: 180px; }
+  .gift-box { width: 120px; height: 100px; }
+}
