@@ -397,6 +397,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 버튼 이벤트
   document.getElementById('openBtn').addEventListener('click', openGiftBox);
   document.getElementById('retryBtn').addEventListener('click', getNewBlessing);
+  document.getElementById('homeBtn').addEventListener('click', goHome);
   document.getElementById('saveBtn').addEventListener('click', saveBlessing);
 
   // 파티클 루프
