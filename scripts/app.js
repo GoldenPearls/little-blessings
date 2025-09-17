@@ -270,87 +270,40 @@ function getNewBlessing() {
   generateRandomBlessing();
 }
 
-function saveBlessing() {
-  if (!currentBlessing || !currentColor || !currentItem) return;
+async function saveBlessing() {
+  const node = document.getElementById('exportArea');
+  if (!node) return;
 
-  const canvas = document.createElement('canvas');
-  const ctx = canvas.getContext('2d');
+  // 폰트/이모지 로딩이 끝날 때까지 대기 (저장 시 글꼴 깨짐 방지)
+  try { await document.fonts.ready; } catch (e) {}
 
-  // 고해상도
-  const w = 600, h = 800;
-  const dpr = window.devicePixelRatio || 1;
-  canvas.width = w * dpr; canvas.height = h * dpr;
-  canvas.style.width = `${w}px`; canvas.style.height = `${h}px`;
-  ctx.scale(dpr, dpr);
+  const options = {
+    cacheBust: true,
+    pixelRatio: Math.min(3, (window.devicePixelRatio || 1)) * 2, // 선명도 업, 용량 과도 방지
+    backgroundColor: '#ffffff',                                   // 투명 배경 방지 (iOS 필수)
+    style: {
+      padding: '16px',
+      borderRadius: '20px',
+      boxShadow: 'none'
+    },
+    filter: (el) => true
+  };
 
-  // 배경 그라데이션
-  const g = ctx.createLinearGradient(0,0, w,h);
-  g.addColorStop(0, '#CBE8E4'); g.addColorStop(.25, '#FFF9E6');
-  g.addColorStop(.5, '#E6DFF5'); g.addColorStop(.75, '#F8D6C2'); g.addColorStop(1, '#CBE8E4');
-  ctx.fillStyle = g; ctx.fillRect(0,0, w,h);
-
-  // 둥근 카드
-  if (!ctx.roundRect) {
-    // Safari 구버전 대비
-    CanvasRenderingContext2D.prototype.roundRect = function(x,y,w,h,r){ this.beginPath(); this.moveTo(x+r,y); this.arcTo(x+w,y,x+w,y+h,r); this.arcTo(x+w,y+h,x,y+h,r); this.arcTo(x,y+h,x,y,r); this.arcTo(x,y,x+w,y,r); this.closePath(); };
+  try {
+    const dataUrl = await htmlToImage.toPng(node, options);
+    const a = document.createElement('a');
+    const dateStr = new Date().toISOString().slice(0,10).replace(/-/g,'');
+    a.href = dataUrl;
+    a.download = `작은축복_${dateStr}.png`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  } catch (err) {
+    console.error('이미지 저장 실패:', err);
+    alert('이미지 저장에 실패했어요. 다시 시도해 주세요.');
   }
-  ctx.fillStyle = 'rgba(255,255,255,0.9)';
-  ctx.beginPath(); ctx.roundRect(50,80,500,640,30); ctx.fill();
-
-  // 제목 (손글씨 폰트)
-  ctx.fillStyle = '#8B7355';
-  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-  ctx.font = 'bold 38px "OngleipParkDahyeon", "Noto Sans KR", sans-serif';
-  ctx.fillText('✨ 작은 축복 ✨', 300, 150);
-
-  // 메인 이모지
-  ctx.font = '72px Arial';
-  ctx.fillText(currentBlessing.emoji, 300, 250);
-
-  // 본문 텍스트 자동 줄바꿈
-  ctx.font = '26px "OngleebDaisy","Noto Sans KR",sans-serif';
-  ctx.fillStyle = '#4A5C6A';
-  const maxWidth = 450, lineHeight = 40;
-  let y = 350;
-  const chars = [...currentBlessing.text]; // 한글/이모지 안전
-  let line = '';
-  for (let i=0;i<chars.length;i++){
-    const test = line + chars[i];
-    if (ctx.measureText(test).width > maxWidth && line.length>0) {
-      ctx.fillText(line, 300, y); y += lineHeight; line = chars[i];
-    } else { line = test; }
-  }
-  ctx.fillText(line, 300, y);
-
-  // 행운 정보 박스
-  ctx.fillStyle = 'rgba(248,214,194,0.3)';
-  ctx.beginPath(); ctx.roundRect(80, y+60, 440, 160, 20); ctx.fill();
-
-  // 라벨 & 값
-  ctx.fillStyle = '#8B7355';
-  ctx.font = 'bold 22px "Noto Sans KR", Arial, sans-serif';
-  ctx.fillText('행운의 색깔', 300, y+120);
-  ctx.font = '28px Arial'; ctx.fillText(`${currentColor.icon} ${currentColor.name}`, 300, y+160);
-
-  ctx.font = 'bold 22px "Noto Sans KR", Arial, sans-serif';
-  ctx.fillText('행운의 아이템', 300, y+200);
-  ctx.font = '28px Arial'; ctx.fillText(`${currentItem.icon} ${currentItem.name}`, 300, y+240);
-
-  // 푸터
-  ctx.font = '18px "Noto Sans KR", Arial, sans-serif';
-  ctx.fillStyle = '#A8B2C0';
-  ctx.fillText('매일매일 작은 기적이 함께하길 🌸', 300, y+320);
-
-  // 저장
-  const link = document.createElement('a');
-  const dateStr = new Date().toISOString().slice(0,10).replace(/-/g,'');
-  link.download = `작은축복_${dateStr}.png`;
-  link.href = canvas.toDataURL('image/png', 1.0);
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  setTimeout(()=> alert('축복 메시지가 저장되었어요! 📸'), 150);
 }
+
 
 /* =========================================================
    7) 파티클 생성 & 초기 바인딩
