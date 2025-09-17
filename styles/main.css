@@ -224,15 +224,33 @@ body {
   border:3px solid rgba(248,214,194,.6); position:relative; overflow:hidden;
 }
 .blessing-card::before{
-  content:'✨ 오늘의 작은 축복 ✨';
+  content:'🌸 오늘의 작은 축복';
   position:absolute; top:-2px; left:50%; transform:translateX(-50%);
-  background:#F8A5C2; color:#fff; padding:5px 15px; border-radius:15px; font-size:.8rem; font-weight:600;
+  background: #FF7F7F; color:#fff; padding:5px 15px; border-radius:15px; font-size:.8rem; font-weight:600;
 }
+
+/* 이모지 전용 폰트 스택(색 이모지 강제 사용) */
+:root {
+  --emoji-fonts: 'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji','EmojiOne Color','Twemoji Mozilla';
+}
+
 .blessing-content { margin-top:15px; text-align:center; }
-.blessing-emoji { font-size:2.5rem; margin-bottom:10px; display:block; }
+/* 메인 이모지: 색 이모지가 확실히 보이도록 전용 스택 우선 */
+.blessing-emoji {
+  font-family: var(--emoji-fonts), system-ui, -apple-system, 'Noto Sans KR', sans-serif;
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  display: block;
+  line-height: 1;
+}
+/* 본문에도 이모지 섞여 있으니 폴백에 이모지 폰트 추가 */
 .blessing-text {
-  font-family: 'OngleebDaisy','Noto Sans KR',sans-serif;
-  font-size: 1.05rem; line-height:1.5; color:#4A5C6A; font-weight:500; margin-bottom:15px;
+  font-family: 'OngleebDaisy','Noto Sans KR', var(--emoji-fonts), system-ui, sans-serif;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  color: #4A5C6A;
+  font-weight: 500;
+  margin-bottom: 15px;
 }
 
 .fortune-info { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:15px 0; }
