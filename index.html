@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>작은 축복 🎁</title>
+
+  <!-- Open Graph / Twitter (선택) -->
+  <meta property="og:title" content="작은 축복 🎁" />
+  <meta property="og:description" content="오늘 당신을 위한 따뜻한 랜덤 메시지와 행운의 색/아이템을 뽑아보세요." />
+  <meta property="og:image" content="assets/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- 폰트 및 기본 스타일 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <link rel="icon" href="assets/favicon.svg" />
+  <link rel="stylesheet" href="styles/main.css" />
+</head>
+<body>
+  <div class="particles" id="particles"></div>
+
+  <div class="container">
+    <!-- 첫 화면 -->
+    <div class="gift-box-screen" id="giftBoxScreen">
+      <div class="header">
+        <h1 class="title">작은 축복</h1>
+        <p class="subtitle">오늘 당신을 위한 따뜻한 메시지</p>
+      </div>
+
+      <div class="gift-box-container" id="giftBoxContainer">
+        <div class="gift-box" id="giftBox">
+          <div class="gift-ribbon-h"></div>
+          <div class="gift-ribbon-v"></div>
+          <div class="gift-bow"></div>
+        </div>
+      </div>
+
+      <button class="main-button" id="openBtn">
+        오늘의 작은 축복 열기 <span class="button-icon">🎁</span>
+      </button>
+    </div>
+
+    <!-- 결과 화면 -->
+    <div class="result-screen" id="resultScreen">
+      <div class="header">
+        <h1 class="title">작은 축복</h1>
+        <p class="subtitle">오늘 당신을 위한 따뜻한 메시지</p>
+      </div>
+
+      <div class="cat-character">
+        <div class="lucky-bag"></div>
+        <div class="cat-head">
+          <div class="cat-face">
+            <div class="cat-eyes">
+              <div class="cat-eye"></div>
+              <div class="cat-eye"></div>
+            </div>
+            <div class="cat-nose"></div>
+            <div class="cat-mouth"></div>
+          </div>
+        </div>
+        <div class="water-drops">
+          <div class="water-drop">💧</div>
+          <div class="water-drop">💧</div>
+        </div>
+      </div>
+
+      <div class="blessing-card">
+        <div class="blessing-content">
+          <span class="blessing-emoji" id="blessingEmoji">📱</span>
+          <div class="blessing-text" id="blessingText">당신의 하루가 따스하게 빛나길 바라요</div>
+        </div>
+
+        <div class="fortune-info">
+          <div class="fortune-item">
+            <div class="fortune-label">행운의 색깔</div>
+            <div class="fortune-value">
+              <span class="fortune-icon" id="colorIcon">💛</span>
+              <span id="luckyColor">크림</span>
+            </div>
+          </div>
+          <div class="fortune-item">
+            <div class="fortune-label">행운의 아이템</div>
+            <div class="fortune-value">
+              <span class="fortune-icon" id="itemIcon">🧸</span>
+              <span id="luckyItem">작은 화분</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <button class="action-button retry-button" id="retryBtn">🔄 다시 뽑기</button>
+        <button class="action-button save-button" id="saveBtn">📷 저장하기</button>
+      </div>
+
+      <div class="footer">매일매일 작은 기적이 함께하길 🌸</div>
+    </div>
+  </div>
+
+  <script src="scripts/app.js"></script>
+</body>
+</html>
