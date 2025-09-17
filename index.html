@@ -64,30 +64,35 @@
         </div>
       </div>
 
-      <div class="blessing-card">
-        <div class="card-label" aria-hidden="true">오늘의 작은 축복</div>
-        <div class="blessing-content">
-          <span class="blessing-emoji" id="blessingEmoji">📱</span>
-          <div class="blessing-text" id="blessingText">당신의 하루가 따스하게 빛나길 바라요</div>
-        </div>
-
-        <div class="fortune-info">
-          <div class="fortune-item">
-            <div class="fortune-label">행운의 색깔</div>
-            <div class="fortune-value">
-              <span class="fortune-icon" id="colorIcon">💛</span>
-              <span id="luckyColor">크림</span>
+      <!-- ⬇️ 캡처 범위 시작 -->
+      <div id="exportArea">
+        <div class="blessing-card">
+          <div class="card-label">오늘의 작은 축복</div>
+          <div class="blessing-content">
+            <span class="blessing-emoji" id="blessingEmoji">📱</span>
+            <div class="blessing-text" id="blessingText">당신의 하루가 따스하게 빛나길 바라요</div>
+          </div>
+    
+          <div class="fortune-info">
+            <div class="fortune-item">
+              <div class="fortune-label">행운의 색깔</div>
+              <div class="fortune-value">
+                <span class="fortune-icon" id="colorIcon">💛</span>
+                <span id="luckyColor">크림</span>
+              </div>
             </div>
-          </div> 
-          <div class="fortune-item">
-            <div class="fortune-label">행운의 아이템</div>
-            <div class="fortune-value">
-              <span class="fortune-icon" id="itemIcon">🧸</span>
-              <span id="luckyItem">작은 화분</span>
+            <div class="fortune-item">
+              <div class="fortune-label">행운의 아이템</div>
+              <div class="fortune-value">
+                <span class="fortune-icon" id="itemIcon">🧸</span>
+                <span id="luckyItem">작은 화분</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <!-- ⬆️ 캡처 범위 끝 -->
+
 
       <div class="action-buttons">
         <button class="action-button home-button" id="homeBtn">🏠 첫 화면으로</button>
@@ -100,5 +105,6 @@
   </div>
 
   <script src="scripts/app.js"></script>
+  <script src="https://unpkg.com/html-to-image@1.11.11/dist/html-to-image.min.js"></script>  
 </body>
 </html>
