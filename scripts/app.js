@@ -373,6 +373,23 @@ function createParticles() {
   }
 }
 
+// 선물 박스 호면으로 
+function goHome() {
+  const giftBox = document.getElementById('giftBox');
+  const giftBoxContainer = document.getElementById('giftBoxContainer');
+  const giftBoxScreen = document.getElementById('giftBoxScreen');
+  const resultScreen = document.getElementById('resultScreen');
+
+  // 결과 화면 숨기고, 홈(선물박스) 화면 다시 보여주기
+  resultScreen.style.display = 'none';
+  giftBoxScreen.style.display = 'block';
+
+  // 박스 애니메이션 초기화
+  giftBox.classList.remove('opening');
+  giftBoxContainer.classList.remove('disappear');
+}
+
+
 document.addEventListener('DOMContentLoaded', () => {
   // 폰트 로딩 후 저장 안정성 향상 (선택)
   document.fonts && document.fonts.ready.then(()=>{ /* ready */ });
