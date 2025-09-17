@@ -1,7 +1,7 @@
 /* Google Font (본문) */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
 
-/* === 손글씨 폰트 3종 === */
+/* === 요청한 손글씨 폰트 3종 === */
 @font-face {
   font-family: 'OngleipParkDahyeon';
   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2411-3@1.0/Ownglyph_ParkDaHyun.woff2') format('woff2');
@@ -22,17 +22,15 @@
   font-display: swap;
 }
 
-/* ===== Reset-ish ===== */
+/* ====== RESET-ish ====== */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-/* 이모지 전용 폰트 스택 */
+/* 이모지 전용 폰트 스택(색 이모지 사용 우선) */
 :root {
   --emoji-fonts: 'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji','EmojiOne Color','Twemoji Mozilla';
 }
 
-/* ===== Page ===== */
-html, body { height: 100%; }
-
+/* ====== PAGE ====== */
 body {
   font-family: 'Noto Sans KR', sans-serif;
   background:
@@ -45,202 +43,299 @@ body {
   justify-content: center;
   color: #4A5C6A;
   overflow-x: hidden;
-  overflow-y: auto;          /* 모바일에선 세로만 스크롤 */
   position: relative;
 }
 
 /* 떠다니는 파티클 */
 .particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
-.particle { position: absolute; font-size: 1.2rem; opacity: .4; animation: floatParticle 12s ease-in-out infinite; }
+.particle { position: absolute; font-size: 1.2rem; opacity: 0.4; animation: floatParticle 12s ease-in-out infinite; }
 @keyframes floatParticle {
-  0%,100% { transform: translateY(0) rotate(0deg); opacity: 0; }
-  10%,90% { opacity: .6; }
-  50%     { transform: translateY(-120px) rotate(180deg); opacity: 1; }
+  0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0; }
+  10%, 90% { opacity: 0.6; }
+  50% { transform: translateY(-120px) rotate(180deg); opacity: 1; }
 }
 
-/* ===== App Card ===== */
-.container{
+/* ====== APP CARD ====== */
+.container {
   max-width: 380px; width: 90%;
-  max-height: 100vh;             /* 화면 넘지 않게 */
-  background: rgba(255,255,255,.95);
+  background: rgba(255, 255, 255, 0.95);
   border-radius: 30px;
   padding: 35px 25px;
-  box-shadow: 0 20px 60px rgba(0,0,0,.15);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
   backdrop-filter: blur(15px);
-  border: 3px solid rgba(255,255,255,.6);
-  position: relative; z-index: 1;
+  border: 3px solid rgba(255,255,255,0.6);
+  position: relative;
+  z-index: 1;
   text-align: center;
-  overflow-y: auto;              /* 내부 스크롤 */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  overflow: hidden;
 }
 
-.header{ margin-bottom: 25px; }
-.title{
+.header { margin-bottom: 25px; }
+
+.title {
   font-family: 'OngleipParkDahyeon','Noto Sans KR',sans-serif;
-  font-size: 2.15rem; font-weight: 700; color: #8B7355; margin-bottom: 8px; letter-spacing: .5px;
+  font-size: 2.15rem;
+  font-weight: 700;
+  color: #8B7355;
+  margin-bottom: 8px;
+  letter-spacing: .5px;
 }
-.subtitle{
+.subtitle {
   font-family: 'MitmiFont','Noto Sans KR',sans-serif;
-  font-size: .95rem; color: #6B7684; font-weight: 400; line-height: 1.4;
+  font-size: 0.95rem;
+  color: #6B7684;
+  font-weight: 400;
+  line-height: 1.4;
 }
 
-/* ===== First screen (gift) ===== */
-.gift-box-screen{ display:block; }
-.gift-box-container{ position:relative; width:200px; height:200px; margin:0 auto 25px; animation: giftFloat 3s ease-in-out infinite; }
-@keyframes giftFloat{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-8px);} }
-.gift-box{
-  width:140px; height:120px; background:linear-gradient(145deg,#F8D6C2,#E6C3A6);
-  border-radius:15px; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-  border:4px solid rgba(255,255,255,.9); box-shadow:0 15px 40px rgba(230,195,166,.4);
-  transition:all .6s cubic-bezier(.175,.885,.32,1.275);
+/* ====== FIRST SCREEN ====== */
+.gift-box-screen { display: block; }
+
+.gift-box-container {
+  position: relative; width: 200px; height: 200px;
+  margin: 0 auto 25px;
+  animation: giftFloat 3s ease-in-out infinite;
 }
-.gift-ribbon-h{ position:absolute; top:50%; left:0; right:0; height:20px; transform:translateY(-50%); background:linear-gradient(145deg,#C7D2FE,#8DB3FF); border-radius:2px; box-shadow:0 4px 15px rgba(141,179,255,.3); }
-.gift-ribbon-v{ position:absolute; left:50%; top:0; bottom:0; width:20px; transform:translateX(-50%); background:linear-gradient(145deg,#C7D2FE,#8DB3FF); border-radius:2px; box-shadow:0 4px 15px rgba(141,179,255,.3); }
-.gift-bow{
-  position:absolute; top:-15px; left:50%; transform:translateX(-50%); width:40px; height:25px;
-  background:linear-gradient(145deg,#E9D5FF,#C7D2FE); border-radius:50% 50% 20% 20%;
-  border:3px solid rgba(255,255,255,.8); box-shadow:0 8px 20px rgba(201,180,255,.4);
+@keyframes giftFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+.gift-box {
+  width: 140px; height: 120px;
+  background: linear-gradient(145deg, #F8D6C2, #E6C3A6);
+  border-radius: 15px;
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  border: 4px solid rgba(255,255,255,0.9);
+  box-shadow: 0 15px 40px rgba(230,195,166,0.4);
+  transition: all .6s cubic-bezier(0.175,0.885,0.32,1.275);
 }
-.gift-bow::before,.gift-bow::after{ content:''; position:absolute; top:50%; width:15px; height:20px; background:linear-gradient(145deg,#E9D5FF,#C7D2FE); border-radius:50%; transform:translateY(-50%); }
-.gift-bow::before{ left:-8px; transform:translateY(-50%) rotate(-20deg); }
-.gift-bow::after { right:-8px; transform:translateY(-50%) rotate(20deg); }
-.gift-box.opening{ animation: boxShake .8s ease-in-out; }
+.gift-ribbon-h {
+  position: absolute; top: 50%; left: 0; right: 0; height: 20px;
+  transform: translateY(-50%);
+  background: linear-gradient(145deg, #C7D2FE, #8DB3FF); /* 파스텔 블루 리본 */
+  border-radius: 2px; box-shadow: 0 4px 15px rgba(141,179,255,.3);
+}
+.gift-ribbon-v {
+  position: absolute; left: 50%; top: 0; bottom: 0; width: 20px;
+  transform: translateX(-50%);
+  background: linear-gradient(145deg, #C7D2FE, #8DB3FF);
+  border-radius: 2px; box-shadow: 0 4px 15px rgba(141,179,255,.3);
+}
+.gift-bow {
+  position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
+  width: 40px; height: 25px;
+  background: linear-gradient(145deg, #E9D5FF, #C7D2FE); /* 라벤더 톤으로 변경 */
+  border-radius: 50% 50% 20% 20%;
+  border: 3px solid rgba(255,255,255,0.8);
+  box-shadow: 0 8px 20px rgba(201, 180, 255, .4);
+}
+.gift-bow::before, .gift-bow::after {
+  content: ''; position: absolute; top: 50%; width: 15px; height: 20px;
+  background: linear-gradient(145deg, #E9D5FF, #C7D2FE);
+  border-radius: 50%; transform: translateY(-50%);
+}
+.gift-bow::before { left: -8px; transform: translateY(-50%) rotate(-20deg); }
+.gift-bow::after  { right: -8px; transform: translateY(-50%) rotate(20deg); }
+
+.gift-box.opening { animation: boxShake .8s ease-in-out; }
 @keyframes boxShake{
-  0%,100%{ transform:translate(-50%,-50%) rotate(0); }
-  10%{ transform:translate(-50%,-50%) rotate(-2deg) scale(1.05); }
-  20%{ transform:translate(-50%,-50%) rotate( 2deg) scale(1.10); }
-  30%{ transform:translate(-50%,-50%) rotate(-2deg) scale(1.05); }
-  40%{ transform:translate(-50%,-50%) rotate( 2deg) scale(1.10); }
-  50%{ transform:translate(-50%,-50%) rotate(-1deg) scale(1.05); }
-  60%{ transform:translate(-50%,-50%) rotate( 1deg) scale(1.02); }
-  80%{ transform:translate(-50%,-50%) rotate( 0)   scale(1.00); }
+  0%,100% { transform: translate(-50%,-50%) rotate(0); }
+  10% { transform: translate(-50%,-50%) rotate(-2deg) scale(1.05); }
+  20% { transform: translate(-50%,-50%) rotate( 2deg) scale(1.10); }
+  30% { transform: translate(-50%,-50%) rotate(-2deg) scale(1.05); }
+  40% { transform: translate(-50%,-50%) rotate( 2deg) scale(1.10); }
+  50% { transform: translate(-50%,-50%) rotate(-1deg) scale(1.05); }
+  60% { transform: translate(-50%,-50%) rotate( 1deg) scale(1.02); }
+  80% { transform: translate(-50%,-50%) rotate( 0)   scale(1.00); }
 }
-.gift-box-container.disappear{ animation: disappear 1s ease-in-out forwards; }
-@keyframes disappear{ 0%{opacity:1; transform:scale(1);} 50%{opacity:.7; transform:scale(1.2);} 100%{opacity:0; transform:scale(0);} }
-
-/* 메인 버튼 */
-.main-button{
-  background: linear-gradient(145deg,#C7D2FE,#E9D5FF);
-  border:none; border-radius:25px; padding:18px 30px;
-  font-size:1.15rem; font-weight:700; color:#4A5568;
-  cursor:pointer; margin:20px 0; box-shadow:0 8px 25px rgba(201,180,255,.35);
-  transition:all .35s cubic-bezier(.175,.885,.32,1.275);
-  border:3px solid rgba(255,255,255,.55);
-  position:relative; overflow:hidden; white-space:nowrap;
-  font-family:'MitmiFont','Noto Sans KR',sans-serif; letter-spacing:.2px;
-}
-.main-button:hover{ transform:translateY(-4px) scale(1.03); box-shadow:0 15px 45px rgba(201,180,255,.45); }
-.button-icon{ display:inline-block; margin-left:8px; animation: giftBounce 2s ease-in-out infinite; }
-@keyframes giftBounce{ 0%,100%{ transform:scale(1);} 50%{ transform:scale(1.12);} }
-
-/* ===== Result screen ===== */
-.result-screen{
-  flex: 1;
-  display:flex; flex-direction:column; justify-content:center;
+.gift-box-container.disappear { animation: disappear 1s ease-in-out forwards; }
+@keyframes disappear {
+  0% { opacity: 1; transform: scale(1); }
+  50% { opacity: .7; transform: scale(1.2); }
+  100%{ opacity: 0; transform: scale(0); }
 }
 
-.cat-character{ width:120px; height:140px; margin:0 auto 20px; position:relative; animation: resultFloat 3s ease-in-out infinite; }
-@keyframes resultFloat{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-10px);} }
-.lucky-bag{
-  width:100px; height:110px; background:linear-gradient(145deg,#F8D6C2,#E6C3A6);
-  border-radius:50px 50px 20px 20px; position:absolute; top:20px; left:50%; transform:translateX(-50%);
-  border:3px solid rgba(255,255,255,.9); box-shadow:0 10px 30px rgba(230,195,166,.4);
+/* 메인 버튼 (폰트 적용 포함) */
+.main-button {
+  background: linear-gradient(145deg, #C7D2FE, #E9D5FF);
+  border: none; border-radius: 25px;
+  padding: 18px 30px;
+  font-size: 1.15rem; font-weight: 700; color: #4A5568;
+  cursor: pointer; margin: 20px 0;
+  box-shadow: 0 8px 25px rgba(201, 180, 255, .35);
+  transition: all .35s cubic-bezier(0.175,0.885,0.32,1.275);
+  border: 3px solid rgba(255,255,255,.55);
+  position: relative; overflow: hidden; white-space: nowrap;
+  font-family: 'MitmiFont','Noto Sans KR',sans-serif;  /* ✅ 요청폰트 */
+  letter-spacing: .2px;
 }
-.lucky-bag::before{ content:''; position:absolute; top:-12px; left:50%; transform:translateX(-50%); width:70px; height:18px; background:#D4B896; border-radius:9px; border:2px solid rgba(255,255,255,.9); }
-.lucky-bag::after { content:'福'; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:1.8rem; font-weight:bold; color:#8B7355; text-shadow:2px 2px 4px rgba(0,0,0,.2); }
-.cat-head{
-  width:70px; height:60px; background:linear-gradient(145deg,#A8A8A8,#8D8D8D);
-  border-radius:35px 35px 30px 30px; position:absolute; top:-5px; left:50%; transform:translateX(-50%);
-  border:2px solid rgba(255,255,255,.9); box-shadow:0 5px 15px rgba(141,141,141,.3);
+.main-button:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 15px 45px rgba(201, 180, 255, .45);
 }
-.cat-head::before,.cat-head::after{ content:''; position:absolute; width:18px; height:22px; top:-12px; background:linear-gradient(145deg,#A8A8A8,#8D8D8D); border-radius:50% 50% 0 0; border:2px solid rgba(255,255,255,.9); }
+.button-icon { display: inline-block; margin-left: 8px; animation: giftBounce 2s ease-in-out infinite; }
+@keyframes giftBounce { 0%,100% { transform: scale(1);} 50% { transform: scale(1.12);} }
+
+/* ====== RESULT SCREEN ====== */
+.result-screen { display: none; }
+
+.cat-character {
+  width: 120px; height: 140px; margin: 0 auto 20px;
+  position: relative; animation: resultFloat 3s ease-in-out infinite;
+}
+@keyframes resultFloat { 0%,100% { transform: translateY(0);} 50% { transform: translateY(-10px);} }
+
+.lucky-bag {
+  width: 100px; height: 110px;
+  background: linear-gradient(145deg, #F8D6C2, #E6C3A6);
+  border-radius: 50px 50px 20px 20px;
+  position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
+  border: 3px solid rgba(255,255,255,.9);
+  box-shadow: 0 10px 30px rgba(230,195,166,.4);
+}
+.lucky-bag::before{
+  content:''; position:absolute; top:-12px; left:50%; transform:translateX(-50%);
+  width:70px; height:18px; background:#D4B896; border-radius:9px; border:2px solid rgba(255,255,255,.9);
+}
+.lucky-bag::after{
+  content:'福'; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  font-size:1.8rem; font-weight:bold; color:#8B7355; text-shadow:2px 2px 4px rgba(0,0,0,.2);
+}
+
+.cat-head {
+  width: 70px; height: 60px;
+  background: linear-gradient(145deg,#A8A8A8,#8D8D8D);
+  border-radius: 35px 35px 30px 30px;
+  position: absolute; top: -5px; left: 50%; transform: translateX(-50%);
+  border: 2px solid rgba(255,255,255,.9); box-shadow: 0 5px 15px rgba(141,141,141,.3);
+}
+.cat-head::before,.cat-head::after{
+  content:''; position:absolute; width:18px; height:22px; top:-12px;
+  background: linear-gradient(145deg,#A8A8A8,#8D8D8D);
+  border-radius: 50% 50% 0 0; border: 2px solid rgba(255,255,255,.9);
+}
 .cat-head::before{ left:15px; transform: rotate(-18deg); }
 .cat-head::after { right:15px; transform: rotate(18deg); }
-.cat-face{ position:absolute; top:55%; left:50%; transform:translate(-50%,-50%); }
-.cat-eyes{ display:flex; gap:12px; margin-bottom:8px; justify-content:center; }
-.cat-eye{ width:8px; height:10px; background:#2d3436; border-radius:50%; position:relative; }
-.cat-eye::before{ content:''; position:absolute; top:1px; right:1px; width:3px; height:4px; background:#fff; border-radius:50%; }
-.cat-nose{ width:4px; height:3px; background:#E9D5FF; border-radius:50%; margin:0 auto 4px; }
-.cat-mouth{ width:12px; height:6px; border:2px solid #2d3436; border-top:none; border-radius:0 0 12px 12px; margin:0 auto; }
+.cat-face { position:absolute; top:55%; left:50%; transform: translate(-50%,-50%); }
+.cat-eyes { display:flex; gap:12px; margin-bottom:8px; justify-content:center; }
+.cat-eye { width:8px; height:10px; background:#2d3436; border-radius:50%; position:relative; }
+.cat-eye::before{ content:''; position:absolute; top:1px; right:1px; width:3px; height:4px; background:white; border-radius:50%; }
+.cat-nose { width:4px; height:3px; background:#E9D5FF; border-radius:50%; margin:0 auto 4px; }
+.cat-mouth { width:12px; height:6px; border:2px solid #2d3436; border-top:none; border-radius:0 0 12px 12px; margin:0 auto; }
 
-/* ===== Blessing card ===== */
-.blessing-card{
-  position:relative;
-  min-height:320px;
-  padding:28px 20px;
-  border-radius:20px;
-  background:linear-gradient(135deg, rgba(255,249,230,.95), rgba(248,214,194,.9));
-  border:3px solid rgba(248,214,194,.6);
-  display:flex; flex-direction:column; justify-content:center; align-items:center; gap:16px;
+/* ====== 카드 (라벨을 요소로, 중앙 정렬 강화) ====== */
+.blessing-card {
+  /* 기존 카드 설정 유지 + 가운데 정렬 강화 */
+  position: relative;
+  min-height: 320px;
+  padding: 28px 20px 28px;           /* 위/아래 균등 패딩 */
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(255, 249, 230, 0.95), rgba(248, 214, 194, 0.9));
+  border: 3px solid rgba(248, 214, 194, 0.6);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;            /* 세로 가운데 */
+  align-items: center;                /* 가로 가운데 */
+  gap: 16px;
 }
-/* ::before 사용 안 함 */
-.blessing-card::before{ content:none !important; }
-/* 라벨 요소 */
+/* 기존 ::before 라벨 제거 */
+.blessing-card::before { content: none !important; }
+/* 새 라벨 요소 */
 .card-label{
-  align-self:center;
-  background:#B39DDB; color:#fff; padding:6px 16px; border-radius:16px;
-  font-size:.82rem; font-weight:700; line-height:1; box-shadow:0 2px 6px rgba(0,0,0,.08);
-  margin-top:-6px;
+  align-self: center;
+  background: #B39DDB;               /* 라벤더 */
+  color: #fff;
+  padding: 6px 16px;
+  border-radius: 16px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1;
+  box-shadow: 0 2px 6px rgba(0,0,0,.08);
+  margin-top: -6px;                   /* 살짝 위로 */
 }
 
-.blessing-content{ text-align:center; margin:0; }
-.blessing-emoji{ font-family:var(--emoji-fonts),system-ui,-apple-system,'Noto Sans KR',sans-serif; font-size:2.6rem; line-height:1; }
-.blessing-text{
-  font-family:'OngleebDaisy','Noto Sans KR',var(--emoji-fonts),system-ui,sans-serif;
-  font-size:1.05rem; line-height:1.55; color:#4A5C6A; font-weight:500;
+/* 카드 내부 요소 */
+.blessing-content { text-align: center; margin: 0; }
+.blessing-emoji {
+  font-family: var(--emoji-fonts), system-ui, -apple-system, 'Noto Sans KR', sans-serif;
+  font-size: 2.6rem; line-height: 1;
+}
+.blessing-text {
+  font-family: 'OngleebDaisy','Noto Sans KR', var(--emoji-fonts), system-ui, sans-serif;
+  font-size: 1.05rem; line-height: 1.55;
+  color: #4A5C6A; font-weight: 500;
 }
 
-/* 행운 정보 */
-.fortune-info{
-  width:100%; max-width:420px;
-  display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:4px;
+/* 행운 정보 그리드 */
+.fortune-info {
+  width: 100%; max-width: 420px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 12px; margin: 4px 0 0;
 }
-.fortune-item{ background:rgba(255,255,255,.85); border-radius:12px; padding:12px 8px; text-align:center; border:2px solid rgba(203,232,228,.5); }
-.fortune-label{ font-size:.75rem; color:#6B7684; margin-bottom:5px; font-weight:600; }
-.fortune-value{
-  font-size:.92rem; color:#8B7355; font-weight:700;
-  display:flex; align-items:center; justify-content:center; gap:10px;
+.fortune-item {
+  background: rgba(255,255,255,.85);
+  border-radius: 12px;
+  padding: 12px 8px;
+  text-align: center;
+  border: 2px solid rgba(203,232,228,.5);
 }
-.fortune-icon{ font-size:1.05rem; transform:translateY(1px); }
+.fortune-label {
+  font-size: .75rem; color: #6B7684; margin-bottom: 5px; font-weight: 600;
+}
+.fortune-value {
+  font-size: .92rem; color: #8B7355; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  gap: 10px;                          /* ✅ 간격 업 */
+}
+.fortune-icon { font-size: 1.05rem; transform: translateY(1px); }
 
-/* ===== Action buttons ===== */
-.action-buttons{
-  display:grid; grid-template-columns:repeat(3, minmax(0,1fr));
-  gap:10px; margin-top:20px;
+/* ====== ACTION BUTTONS ====== */
+.action-buttons {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px; margin-top: 20px;
 }
-.action-button{
-  font-family:'MitmiFont','Noto Sans KR',sans-serif;
-  background:rgba(255,255,255,.85);
-  border:2px solid #CBE8E4; border-radius:15px;
-  padding:12px 14px; font-size:clamp(.80rem, 2.2vw, .95rem);
-  line-height:1; cursor:pointer; color:#4A5C6A; font-weight:700;
-  transition:all .25s ease;
-  display:inline-flex; align-items:center; justify-content:center; gap:6px;
-  white-space:nowrap; min-width:0; overflow:hidden; text-overflow:ellipsis; letter-spacing:.2px;
+.action-button {
+  font-family: 'MitmiFont','Noto Sans KR',sans-serif; /* ✅ 버튼 폰트 */
+  background: rgba(255,255,255,.85);
+  border: 2px solid #CBE8E4; border-radius: 15px;
+  padding: 12px 14px;
+  font-size: clamp(.80rem, 2.2vw, .95rem);
+  line-height: 1;
+  cursor: pointer; color: #4A5C6A; font-weight: 700;
+  transition: all .25s ease;
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 6px; white-space: nowrap; min-width: 0; overflow: hidden; text-overflow: ellipsis;
+  letter-spacing: .2px;
 }
-.action-button:hover{ background:rgba(203,232,228,.9); border-color:#8B7355; color:#8B7355; transform:translateY(-2px); }
-.retry-button{ background:linear-gradient(145deg,#E6DFF5,#CBE8E4); border-color:transparent; }
-.save-button { background:linear-gradient(145deg,#F8E7D8,#EAD4C3); border-color:transparent; }
-.btn-ic{ font-family:var(--emoji-fonts), 'Noto Sans KR', sans-serif; }
-.btn-txt{ white-space:nowrap; }
+.action-button:hover {
+  background: rgba(203,232,228,.9);
+  border-color: #8B7355; color: #8B7355;
+  transform: translateY(-2px);
+}
+.retry-button { background: linear-gradient(145deg, #E6DFF5, #CBE8E4); border-color: transparent; }
+.save-button  { background: linear-gradient(145deg, #F8E7D8, #EAD4C3); border-color: transparent; }
 
-@media (max-width:340px){
+.btn-ic { font-family: var(--emoji-fonts), 'Noto Sans KR', sans-serif; }
+.btn-txt { white-space: nowrap; }
+
+@media (max-width: 340px){
   .btn-txt{ display:none; }
   .action-button{ padding:12px; }
 }
 
-/* ===== Footer ===== */
-.footer{ margin-top:20px; font-size:.75rem; color:#A8B2C0; line-height:1.4; }
+/* ====== FOOTER ====== */
+.footer { margin-top: 20px; font-size: .75rem; color: #A8B2C0; line-height: 1.4; }
 
-/* ===== Transitions ===== */
-.screen-transition{ animation: screenFadeIn .9s ease-in-out; }
-@keyframes screenFadeIn{ 0%{ opacity:0; transform:translateY(30px) scale(.96);} 100%{ opacity:1; transform:translateY(0) scale(1);} }
+/* ====== SCREEN TRANSITION ====== */
+.screen-transition { animation: screenFadeIn 0.9s ease-in-out; }
+@keyframes screenFadeIn {
+  0% { opacity: 0; transform: translateY(30px) scale(.96); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
 
-/* ===== Responsive tweaks ===== */
-@media (max-width:480px){
-  .container{ padding:25px 20px; margin:10px; }
-  .gift-box-container{ width:180px; height:180px; }
-  .gift-box{ width:120px; height:100px; }
+/* ====== RESPONSIVE ====== */
+@media (max-width: 480px) {
+  .container { padding: 25px 20px; margin: 10px; }
+  .gift-box-container { width: 180px; height: 180px; }
+  .gift-box { width: 120px; height: 100px; }
 }
