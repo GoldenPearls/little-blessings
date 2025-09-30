@@ -270,55 +270,68 @@ function getNewBlessing() {
   generateRandomBlessing();
 }
 
-async function saveBlessing() {
+function saveBlessing() {
   if (!currentBlessing || !currentColor || !currentItem) return;
 
-  const exportArea = document.getElementById('exportArea');
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  const w = 600, h = 800, dpr = 2;
   
-  try {
-    // 로딩 표시
-    const saveBtn = document.getElementById('saveBtn');
-    const originalText = saveBtn.innerHTML;
-    saveBtn.innerHTML = '⏳ 저장 중...';
-    saveBtn.disabled = true;
+  canvas.width = w * dpr; 
+  canvas.height = h * dpr;
+  ctx.scale(dpr, dpr);
 
-    // 폰트 로딩 대기
-    await document.fonts.ready;
+  // 배경
+  ctx.fillStyle = '#FFF9E6';
+  ctx.fillRect(0, 0, w, h);
 
-    // PNG로 변환 (html-to-image 라이브러리 사용)
-    const dataUrl = await htmlToImage.toPng(exportArea, {
-      quality: 1.0,
-      pixelRatio: 2, // 고해상도
-      backgroundColor: '#ffffff',
-      cacheBust: true,
-      style: {
-        margin: '0',
-        padding: '20px',
-      }
-    });
+  // 카드
+  ctx.fillStyle = '#FFFFFF';
+  ctx.shadowColor = 'rgba(0,0,0,0.1)';
+  ctx.shadowBlur = 20;
+  ctx.fillRect(40, 60, 520, 680);
+  ctx.shadowBlur = 0;
 
-    // 다운로드
-    const link = document.createElement('a');
-    const dateStr = new Date().toISOString().slice(0,10).replace(/-/g,'');
-    link.download = `작은축복_${dateStr}.png`;
-    link.href = dataUrl;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  // 제목
+  ctx.fillStyle = '#8B7355';
+  ctx.textAlign = 'center';
+  ctx.font = 'bold 36px "Noto Sans KR", sans-serif';
+  ctx.fillText('오늘의 작은 축복', 300, 130);
 
-    // 버튼 복원
-    saveBtn.innerHTML = originalText;
-    saveBtn.disabled = false;
-    
-    setTimeout(() => alert('축복 메시지가 저장되었어요! 📸'), 100);
-    
-  } catch (error) {
-    console.error('저장 실패:', error);
-    alert('저장에 실패했습니다. 다시 시도해주세요.');
-    const saveBtn = document.getElementById('saveBtn');
-    saveBtn.innerHTML = '📷 저장하기';
-    saveBtn.disabled = false;
-  }
+  // 이모지
+  ctx.font = '72px Arial';
+  ctx.fillText(currentBlessing.emoji, 300, 230);
+
+  // 본문
+  ctx.font = '24px "Noto Sans KR", sans-serif';
+  ctx.fillStyle = '#4A5C6A';
+  const lines = currentBlessing.text.match(/.{1,20}/g) || [currentBlessing.text];
+  let y = 300;
+  lines.forEach(line => {
+    ctx.fillText(line, 300, y);
+    y += 35;
+  });
+
+  // 행운 정보
+  y += 60;
+  ctx.font = 'bold 20px "Noto Sans KR", sans-serif';
+  ctx.fillStyle = '#8B7355';
+  ctx.fillText('행운의 색깔', 300, y);
+  ctx.font = '26px Arial';
+  ctx.fillText(`${currentColor.icon} ${currentColor.name}`, 300, y + 35);
+
+  ctx.font = 'bold 20px "Noto Sans KR", sans-serif';
+  ctx.fillText('행운의 아이템', 300, y + 90);
+  ctx.font = '26px Arial';
+  ctx.fillText(`${currentItem.icon} ${currentItem.name}`, 300, y + 125);
+
+  // 저장
+  const link = document.createElement('a');
+  link.download = `작은축복_${new Date().toISOString().slice(0,10)}.png`;
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+  
+  alert('축복 메시지가 저장되었어요! 📸');
 }
 
 /* =========================================================
