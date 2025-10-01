@@ -273,48 +273,69 @@ function getNewBlessing() {
 async function saveBlessing() {
   if (!currentBlessing || !currentColor || !currentItem) return;
 
-  // htmlToImage 라이브러리 체크
-  if (typeof htmlToImage === 'undefined') {
-    alert('이미지 저장 기능을 불러오는 중입니다. 잠시 후 다시 시도해주세요.');
-    console.error('htmlToImage 라이브러리가 로드되지 않았습니다.');
-    return;
-  }
-
-  const exportArea = document.getElementById('exportArea');
   const saveBtn = document.getElementById('saveBtn');
   
   try {
-    // 로딩 표시
     const originalHTML = saveBtn.innerHTML;
     saveBtn.innerHTML = '⏳ 저장 중...';
     saveBtn.disabled = true;
 
-    // 폰트 로딩 대기
+    // 폰트 완전히 로드될 때까지 대기
     await document.fonts.ready;
-    
-    // 약간의 지연 (렌더링 완료 대기)
-    await new Promise(resolve => setTimeout(resolve, 300));
+    await new Promise(resolve => setTimeout(resolve, 1000)); // 1초로 증가
 
-    // html-to-image로 캡처
-    const dataUrl = await htmlToImage.toPng(exportArea, {
-      quality: 1.0,
-      pixelRatio: 2,
-      backgroundColor: 'transparent',
-      cacheBust: true,
+    const exportArea = document.getElementById('exportArea');
+    const clone = exportArea.cloneNode(true);
+    
+    const tempContainer = document.createElement('div');
+    tempContainer.style.cssText = `
+      position: fixed;
+      left: -9999px;
+      top: 0;
+      width: 400px;
+      background: linear-gradient(135deg, rgba(255, 249, 230, 0.95), rgba(248, 214, 194, 0.9));
+      padding: 30px;
+      border-radius: 20px;
+      font-family: 'OngleebDaisy', 'Noto Sans KR', sans-serif;
+    `;
+    tempContainer.appendChild(clone);
+    document.body.appendChild(tempContainer);
+
+    // 폰트 강제 적용
+    const allText = tempContainer.querySelectorAll('*');
+    allText.forEach(el => {
+      const computed = window.getComputedStyle(el);
+      el.style.fontFamily = computed.fontFamily;
     });
 
-    // 다운로드
+    // 추가 대기
+    await new Promise(resolve => setTimeout(resolve, 500));
+
+    const dataUrl = await htmlToImage.toPng(tempContainer, {
+      quality: 0.95,
+      pixelRatio: 2,
+      backgroundColor: '#FFF9E6',
+      cacheBust: true,
+      fontEmbedCSS: `
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+        @font-face {
+          font-family: 'OngleebDaisy';
+          src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2508-2@1.0/Ownglyph_daisy-Rg.woff2') format('woff2');
+        }
+      `
+    });
+
+    document.body.removeChild(tempContainer);
+
     const link = document.createElement('a');
     const dateStr = new Date().toISOString().slice(0,10).replace(/-/g,'');
     link.download = `작은축복_${dateStr}.png`;
     link.href = dataUrl;
     link.click();
 
-    // 버튼 복원
     saveBtn.innerHTML = originalHTML;
     saveBtn.disabled = false;
-    
-    alert('축복 메시지가 저장되었어요! 📸');
+    alert('축복 메시지가 저장되었어요!');
     
   } catch (error) {
     console.error('저장 실패:', error);
@@ -323,7 +344,6 @@ async function saveBlessing() {
     saveBtn.disabled = false;
   }
 }
-
 /* =========================================================
    7) 파티클 생성 & 초기 바인딩
    ========================================================= */
