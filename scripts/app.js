@@ -273,6 +273,13 @@ function getNewBlessing() {
 async function saveBlessing() {
   if (!currentBlessing || !currentColor || !currentItem) return;
 
+  // htmlToImage 라이브러리 체크
+  if (typeof htmlToImage === 'undefined') {
+    alert('이미지 저장 기능을 불러오는 중입니다. 잠시 후 다시 시도해주세요.');
+    console.error('htmlToImage 라이브러리가 로드되지 않았습니다.');
+    return;
+  }
+
   const exportArea = document.getElementById('exportArea');
   const saveBtn = document.getElementById('saveBtn');
   
