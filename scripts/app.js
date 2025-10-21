@@ -296,6 +296,12 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('openBtn').addEventListener('click', openGiftBox);
   document.getElementById('homeBtn').addEventListener('click', goHome);
 
+   // 날짜 레이블 업데이트
+  const today = new Date();
+  const month = today.getMonth() + 1; // 0-11이므로 +1
+  const date = today.getDate();
+  document.getElementById('dateLabel').textContent = `${month}월 ${date}일의 작은 축복`;
+
   // 파티클 루프
   createParticles();
   setInterval(createParticles, 6000);
