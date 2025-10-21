@@ -207,22 +207,11 @@ const luckyItems = [
 ];
 
 /* =========================================================
-   5) 뽑기 로직 (중복 방지)
+   5) 뽑기 로직
    ========================================================= */
 let currentBlessing = null;
 let currentColor = null;
 let currentItem = null;
-
-function pickDifferentRandom(arr, prevObj, key = 'text') {
-  if (!prevObj) return arr[Math.floor(Math.random() * arr.length)];
-  let candidate = arr[Math.floor(Math.random() * arr.length)];
-  let safety = 0;
-  while (candidate[key] === prevObj[key] && safety < 8) {
-    candidate = arr[Math.floor(Math.random() * arr.length)];
-    safety++;
-  }
-  return candidate;
-}
 
 function updateUI() {
   document.getElementById('blessingEmoji').textContent = currentBlessing.emoji;
@@ -239,14 +228,14 @@ function updateUI() {
 }
 
 function generateRandomBlessing() {
-  currentBlessing = pickDifferentRandom(allBlessings, currentBlessing, 'text');
-  currentColor    = pickDifferentRandom(luckyColors, currentColor, 'name');
-  currentItem     = pickDifferentRandom(luckyItems, currentItem, 'name');
+  currentBlessing = allBlessings[Math.floor(Math.random() * allBlessings.length)];
+  currentColor    = luckyColors[Math.floor(Math.random() * luckyColors.length)];
+  currentItem     = luckyItems[Math.floor(Math.random() * luckyItems.length)];
   updateUI();
 }
 
 /* =========================================================
-   6) 화면 전환 & 저장
+   6) 화면 전환
    ========================================================= */
 function openGiftBox() {
   const giftBox = document.getElementById('giftBox');
@@ -265,56 +254,20 @@ function openGiftBox() {
   }, 1800);
 }
 
-function getNewBlessing() {
-  // 화면 전환 없이 내용만 갱신
-  generateRandomBlessing();
-}
+// 선물 박스 화면으로 돌아가기
+function goHome() {
+  const giftBox = document.getElementById('giftBox');
+  const giftBoxContainer = document.getElementById('giftBoxContainer');
+  const giftBoxScreen = document.getElementById('giftBoxScreen');
+  const resultScreen = document.getElementById('resultScreen');
 
-async function saveBlessing() {
-  if (!currentBlessing || !currentColor || !currentItem) return;
+  // 결과 화면 숨기고, 홈(선물박스) 화면 다시 보여주기
+  resultScreen.style.display = 'none';
+  giftBoxScreen.style.display = 'block';
 
-  const exportArea = document.getElementById('exportArea');
-  const saveBtn = document.getElementById('saveBtn');
-  
-  try {
-    // 로딩 표시
-    const originalHTML = saveBtn.innerHTML;
-    saveBtn.innerHTML = '⏳ 저장 중...';
-    saveBtn.disabled = true;
-
-    // 폰트 로딩 대기
-    await document.fonts.ready;
-    
-    // 약간의 지연 (렌더링 완료 대기)
-    await new Promise(resolve => setTimeout(resolve, 300));
-
-    // html-to-image로 캡처
-    const dataUrl = await htmlToImage.toPng(exportArea, {
-      quality: 1.0,
-      pixelRatio: 2,
-      backgroundColor: 'transparent',
-      cacheBust: true,
-    });
-
-    // 다운로드
-    const link = document.createElement('a');
-    const dateStr = new Date().toISOString().slice(0,10).replace(/-/g,'');
-    link.download = `작은축복_${dateStr}.png`;
-    link.href = dataUrl;
-    link.click();
-
-    // 버튼 복원
-    saveBtn.innerHTML = originalHTML;
-    saveBtn.disabled = false;
-    
-    alert('축복 메시지가 저장되었어요! 📸');
-    
-  } catch (error) {
-    console.error('저장 실패:', error);
-    alert('저장에 실패했습니다. 다시 시도해주세요.');
-    saveBtn.innerHTML = '📷 저장하기';
-    saveBtn.disabled = false;
-  }
+  // 박스 애니메이션 초기화
+  giftBox.classList.remove('opening');
+  giftBoxContainer.classList.remove('disappear');
 }
 
 /* =========================================================
@@ -338,32 +291,10 @@ function createParticles() {
   }
 }
 
-// 선물 박스 호면으로 
-function goHome() {
-  const giftBox = document.getElementById('giftBox');
-  const giftBoxContainer = document.getElementById('giftBoxContainer');
-  const giftBoxScreen = document.getElementById('giftBoxScreen');
-  const resultScreen = document.getElementById('resultScreen');
-
-  // 결과 화면 숨기고, 홈(선물박스) 화면 다시 보여주기
-  resultScreen.style.display = 'none';
-  giftBoxScreen.style.display = 'block';
-
-  // 박스 애니메이션 초기화
-  giftBox.classList.remove('opening');
-  giftBoxContainer.classList.remove('disappear');
-}
-
-
 document.addEventListener('DOMContentLoaded', () => {
-  // 폰트 로딩 후 저장 안정성 향상 (선택)
-  document.fonts && document.fonts.ready.then(()=>{ /* ready */ });
-
   // 버튼 이벤트
   document.getElementById('openBtn').addEventListener('click', openGiftBox);
-  document.getElementById('retryBtn').addEventListener('click', getNewBlessing);
   document.getElementById('homeBtn').addEventListener('click', goHome);
-  document.getElementById('saveBtn').addEventListener('click', saveBlessing);
 
   // 파티클 루프
   createParticles();
