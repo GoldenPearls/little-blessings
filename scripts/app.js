@@ -1,5 +1,10 @@
 /* =========================================================
-   1) 카테고리 원문구 (요청안 그대로, 이모지 포함)
+   작은 축복 - app.js
+   감정 선택 + 랜덤 메시지 + 감정별 카드 테마/캐릭터
+   ========================================================= */
+
+/* =========================================================
+   1) 카테고리 원문구
    ========================================================= */
 const messagesByMood = {
   tired: [
@@ -34,6 +39,7 @@ const messagesByMood = {
     "내일은 오늘보다 더 빛날 거예요. 🌈",
     "지금의 당신 그대로 충분히 아름다워요. 🌷"
   ],
+
   sad: [
     "슬픈 마음도 당신의 소중한 감정이에요. 충분히 느끼고, 천천히 치유되길. 💙",
     "눈물이 나와도 괜찮아요. 당신은 혼자가 아니라는 걸 기억해 주세요. 🤝",
@@ -66,6 +72,7 @@ const messagesByMood = {
     "그대의 눈물은 곧 희망으로 바뀔 거예요. 💫",
     "당신은 여전히 소중한 사람입니다. 🌹"
   ],
+
   stress: [
     "복잡한 마음, 이해해요. 한 번에 하나씩, 천천히 해결해 나가요. 🌱",
     "스트레스받는 당신도 충분히 잘하고 있어요. 자신을 믿어보세요. ⭐️",
@@ -98,6 +105,7 @@ const messagesByMood = {
     "작은 미소가 큰 힘이 돼요. 😊",
     "당신의 가치는 상황과 상관없이 빛나요. 🔆"
   ],
+
   lonely: [
     "외롭다고 느끼는 마음, 저도 함께 나누고 싶어요. 당신은 소중한 사람이에요. 💕",
     "혼자여도 괜찮아요. 당신만의 특별한 시간을 만들어보세요. 🌟",
@@ -129,10 +137,25 @@ const messagesByMood = {
     "누군가의 진심 어린 응원이 지금 당신을 향하고 있어요. 🌈",
     "외로움 속에서도 당신은 빛나요. 🔆",
     "언제나 당신은 충분히 사랑받고 있어요. 💖"
+  ],
+
+  comfort: [
+    "오늘은 귀여움이 당신 편이에요. 작은 미소 하나면 충분해요. 🐾",
+    "복슬복슬한 위로 한 스푼 놓고 갈게요. 🧸",
+    "괜히 마음이 허전한 날엔 귀여운 것 하나로도 충분해요. 🌸",
+    "오늘 당신은 토닥토닥이 꼭 필요한 사람입니다. 🤍",
+    "작고 말랑한 행복이 당신에게 착 붙길. 🍀",
+    "귀여운 건 세상을 구하고, 오늘은 당신도 구해줄 거예요. ✨",
+    "오늘 하루는 복냥이가 당신 편이래요. 🐱",
+    "복실한 위로가 조용히 당신 곁에 앉아 있어요. 🌼",
+    "괜찮아, 오늘은 그냥 귀여워도 되는 날이에요. 🎀",
+    "작은 고양이 한 마리만큼의 평온이 당신에게 오길. 🌙"
   ]
 };
 
-/* (옵션) 가벼운 유머 메시지 — 추가 */
+/* =========================================================
+   2) 가벼운 유머 메시지
+   ========================================================= */
 const extraFunny = [
   "오늘 밤, 상사를 마음껏 혼내는 꿈을 꾸게 될 거예요. 😴",
   "길을 가다 5천 원짜리 지폐를 주울 확률이 높습니다. 👛",
@@ -156,153 +179,317 @@ const extraFunny = [
 ];
 
 /* =========================================================
-   2) 텍스트 → {emoji, text} 변환
+   3) 감정별 메타 정보
+   - image 경로는 assets 폴더에 실제 파일명 맞춰주세요.
+   ========================================================= */
+const moodMeta = {
+  tired: {
+    label: "😴 조금 지친 날",
+    theme: "theme-tired",
+    image: "assets/cat_tired.png"
+  },
+  sad: {
+    label: "💧 괜히 울적한 날",
+    theme: "theme-sad",
+    image: "assets/cat_sad.png"
+  },
+  stress: {
+    label: "⚡ 스트레스 많은 날",
+    theme: "theme-stress",
+    image: "assets/cat_stress.png"
+  },
+  lonely: {
+    label: "🌙 외로운 날",
+    theme: "theme-lonely",
+    image: "assets/cat_lonely.png"
+  },
+  comfort: {
+    label: "🐾 귀여운 위로가 필요한 날",
+    theme: "theme-comfort",
+    image: "assets/cat_comfort.png"
+  },
+  random: {
+    label: "🎲 랜덤 축복",
+    theme: "theme-random",
+    image: "assets/blessing_main.png"
+  }
+};
+
+/* =========================================================
+   4) 행운의 색 / 아이템
+   ========================================================= */
+const luckyColors = [
+  { name: "민트", icon: "💚" },
+  { name: "라벤더", icon: "💜" },
+  { name: "살구", icon: "🧡" },
+  { name: "하늘색", icon: "💙" },
+  { name: "옅은 핑크", icon: "🌸" },
+  { name: "크림", icon: "💛" },
+  { name: "연보라", icon: "💜" },
+  { name: "피치", icon: "🧡" },
+  { name: "베이비 블루", icon: "💙" },
+  { name: "소프트 옐로", icon: "💛" },
+  { name: "네이비", icon: "💙" },
+  { name: "코랄", icon: "🧡" },
+  { name: "올리브", icon: "🌿" },
+  { name: "모브", icon: "💜" },
+  { name: "버터", icon: "💛" },
+  { name: "코발트", icon: "🔷" },
+  { name: "플럼", icon: "🍇" },
+  { name: "틸", icon: "🦚" },
+  { name: "라임", icon: "💚" },
+  { name: "카멜", icon: "🟫" }
+];
+
+const luckyItems = [
+  { name: "따뜻한 머그컵", icon: "☕️" },
+  { name: "책 한 권", icon: "📖" },
+  { name: "작은 화분", icon: "🌱" },
+  { name: "향초", icon: "🕯️" },
+  { name: "부드러운 담요", icon: "🧸" },
+  { name: "좋아하는 음악", icon: "🎵" },
+  { name: "달콤한 초콜릿", icon: "🍫" },
+  { name: "예쁜 스티커", icon: "✨" },
+  { name: "포근한 쿠션", icon: "🛋️" },
+  { name: "따뜻한 차", icon: "🍵" },
+  { name: "행운의 동전", icon: "💰" },
+  { name: "파우치", icon: "👝" },
+  { name: "손수건", icon: "🧻" },
+  { name: "볼펜", icon: "🖊️" },
+  { name: "스니커즈", icon: "👟" },
+  { name: "산책 10분", icon: "🚶" },
+  { name: "사진 한 장", icon: "📸" },
+  { name: "작은 노트", icon: "📓" },
+  { name: "헤어끈", icon: "🧵" },
+  { name: "텀블러", icon: "🥤" },
+  { name: "접이식 우산", icon: "🌂" },
+  { name: "핫팩", icon: "♨️" }
+];
+
+/* =========================================================
+   5) 유틸
    ========================================================= */
 function lineToBlessing(line) {
-  const m = line.match(/([\p{Extended_Pictographic}\u2600-\u27BF]\uFE0F?|\p{Emoji_Presentation}|\p{Emoji})$/u);
+  const m = line.match(
+    /([\p{Extended_Pictographic}\u2600-\u27BF]\uFE0F?|\p{Emoji_Presentation}|\p{Emoji})$/u
+  );
   const emoji = m ? m[1] : "✨";
   const text = m ? line.replace(m[1], "").trim() : line;
   return { emoji, text };
 }
 
-/* =========================================================
-   3) allBlessings 생성
-   ========================================================= */
-const allBlessings = [
-  ...messagesByMood.tired.map(lineToBlessing),
-  ...messagesByMood.sad.map(lineToBlessing),
-  ...messagesByMood.stress.map(lineToBlessing),
-  ...messagesByMood.lonely.map(lineToBlessing),
-  ...extraFunny.map(lineToBlessing)
-];
+function randomPick(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function setText(id, value) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = value;
+}
 
 /* =========================================================
-   4) 행운의 색/아이템 확장
-   ========================================================= */
-const luckyColors = [
-  { name: "민트", icon: "💚" }, { name: "라벤더", icon: "💜" },
-  { name: "살구", icon: "🧡" }, { name: "하늘색", icon: "💙" },
-  { name: "옅은 핑크", icon: "🌸" }, { name: "크림", icon: "💛" },
-  { name: "연보라", icon: "💜" }, { name: "피치", icon: "🧡" },
-  { name: "베이비 블루", icon: "💙" }, { name: "소프트 옐로", icon: "💛" },
-  { name: "네이비", icon: "💙" }, { name: "코랄", icon: "🧡" },
-  { name: "올리브", icon: "🌿" }, { name: "모브", icon: "💜" },
-  { name: "버터", icon: "💛" }, { name: "코발트", icon: "🔷" },
-  { name: "플럼", icon: "🍇" }, { name: "틸", icon: "🦚" },
-  { name: "라임", icon: "💚" }, { name: "카멜", icon: "🟫" }
-];
-
-const luckyItems = [
-  { name: "따뜻한 머그컵", icon: "☕️" }, { name: "책 한 권", icon: "📖" },
-  { name: "작은 화분", icon: "🌱" }, { name: "향초", icon: "🕯️" },
-  { name: "부드러운 담요", icon: "🧸" }, { name: "좋아하는 음악", icon: "🎵" },
-  { name: "달콤한 초콜릿", icon: "🍫" }, { name: "예쁜 스티커", icon: "✨" },
-  { name: "포근한 쿠션", icon: "🛋️" }, { name: "따뜻한 차", icon: "🍵" },
-  { name: "행운의 동전", icon: "💰" }, { name: "파우치", icon: "👝" },
-  { name: "손수건", icon: "🧻" }, { name: "볼펜", icon: "🖊️" },
-  { name: "스니커즈", icon: "👟" }, { name: "산책 10분", icon: "🚶" },
-  { name: "사진 한 장", icon: "📸" }, { name: "작은 노트", icon: "📓" },
-  { name: "헤어끈", icon: "🧵" }, { name: "텀블러", icon: "🥤" },
-  { name: "접이식 우산", icon: "🌂" }, { name: "핫팩", icon: "♨️" }
-];
-
-/* =========================================================
-   5) 뽑기 로직
+   6) 상태값
    ========================================================= */
 let currentBlessing = null;
 let currentColor = null;
 let currentItem = null;
+let selectedMood = "random";
 
-function updateUI() {
-  document.getElementById('blessingEmoji').textContent = currentBlessing.emoji;
-  document.getElementById('blessingText').textContent  = currentBlessing.text;
-  document.getElementById('colorIcon').textContent     = currentColor.icon;
-  document.getElementById('luckyColor').textContent    = currentColor.name;
-  document.getElementById('itemIcon').textContent      = currentItem.icon;
-  document.getElementById('luckyItem').textContent     = currentItem.name;
+/* =========================================================
+   7) 감정별 메시지 풀 생성
+   ========================================================= */
+function getBlessingPoolByMood(mood) {
+  if (mood === "random") {
+    return [
+      ...messagesByMood.tired.map(lineToBlessing),
+      ...messagesByMood.sad.map(lineToBlessing),
+      ...messagesByMood.stress.map(lineToBlessing),
+      ...messagesByMood.lonely.map(lineToBlessing),
+      ...messagesByMood.comfort.map(lineToBlessing),
+      ...extraFunny.map(lineToBlessing)
+    ];
+  }
 
-  const card = document.querySelector('.blessing-card');
-  card.style.transform = 'scale(0.98)';
-  card.style.transition = 'transform .2s';
-  requestAnimationFrame(() => setTimeout(() => { card.style.transform = 'scale(1)'; }, 120));
+  let pool = [...messagesByMood[mood].map(lineToBlessing)];
+
+  if (mood === "comfort") {
+    pool = [...pool, ...extraFunny.map(lineToBlessing)];
+  }
+
+  return pool;
 }
 
+/* =========================================================
+   8) UI 업데이트
+   ========================================================= */
+function updateUI() {
+  if (!currentBlessing || !currentColor || !currentItem) return;
+
+  setText("blessingEmoji", currentBlessing.emoji);
+  setText("blessingText", currentBlessing.text);
+  setText("colorIcon", currentColor.icon);
+  setText("luckyColor", currentColor.name);
+  setText("itemIcon", currentItem.icon);
+  setText("luckyItem", currentItem.name);
+
+  const meta = moodMeta[selectedMood] || moodMeta.random;
+  const moodBadge = document.getElementById("moodBadge");
+  const card = document.getElementById("blessingCard") || document.querySelector(".blessing-card");
+  const characterImg = document.querySelector(".image_main_character");
+
+  if (moodBadge) {
+    moodBadge.textContent = meta.label;
+  }
+
+  if (characterImg) {
+    characterImg.src = meta.image;
+    characterImg.alt = meta.label;
+  }
+
+  if (card) {
+    card.classList.remove(
+      "theme-tired",
+      "theme-sad",
+      "theme-stress",
+      "theme-lonely",
+      "theme-comfort",
+      "theme-random"
+    );
+
+    card.classList.add(meta.theme);
+
+    card.style.transform = "scale(0.98)";
+    card.style.transition = "transform .2s";
+
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        card.style.transform = "scale(1)";
+      }, 120);
+    });
+  }
+}
+
+/* =========================================================
+   9) 랜덤 축복 생성
+   ========================================================= */
 function generateRandomBlessing() {
-  currentBlessing = allBlessings[Math.floor(Math.random() * allBlessings.length)];
-  currentColor    = luckyColors[Math.floor(Math.random() * luckyColors.length)];
-  currentItem     = luckyItems[Math.floor(Math.random() * luckyItems.length)];
+  const pool = getBlessingPoolByMood(selectedMood);
+
+  currentBlessing = randomPick(pool);
+  currentColor = randomPick(luckyColors);
+  currentItem = randomPick(luckyItems);
+
   updateUI();
 }
 
 /* =========================================================
-   6) 화면 전환
+   10) 화면 전환
    ========================================================= */
 function openGiftBox() {
-  const giftBox = document.getElementById('giftBox');
-  const giftBoxContainer = document.getElementById('giftBoxContainer');
-  const giftBoxScreen = document.getElementById('giftBoxScreen');
-  const resultScreen = document.getElementById('resultScreen');
+  const giftBox = document.getElementById("giftBox");
+  const giftBoxContainer = document.getElementById("giftBoxContainer");
+  const giftBoxScreen = document.getElementById("giftBoxScreen");
+  const resultScreen = document.getElementById("resultScreen");
 
-  giftBox.classList.add('opening');
-  setTimeout(() => giftBoxContainer.classList.add('disappear'), 800);
+  if (giftBox) giftBox.classList.add("opening");
+  setTimeout(() => {
+    if (giftBoxContainer) giftBoxContainer.classList.add("disappear");
+  }, 800);
 
   setTimeout(() => {
-    giftBoxScreen.style.display = 'none';
-    resultScreen.style.display  = 'block';
-    resultScreen.classList.add('screen-transition');
+    if (giftBoxScreen) giftBoxScreen.style.display = "none";
+    if (resultScreen) {
+      resultScreen.style.display = "block";
+      resultScreen.classList.add("screen-transition");
+    }
+
     generateRandomBlessing();
   }, 1800);
 }
 
-// 선물 박스 화면으로 돌아가기
 function goHome() {
-  const giftBox = document.getElementById('giftBox');
-  const giftBoxContainer = document.getElementById('giftBoxContainer');
-  const giftBoxScreen = document.getElementById('giftBoxScreen');
-  const resultScreen = document.getElementById('resultScreen');
+  const giftBox = document.getElementById("giftBox");
+  const giftBoxContainer = document.getElementById("giftBoxContainer");
+  const giftBoxScreen = document.getElementById("giftBoxScreen");
+  const resultScreen = document.getElementById("resultScreen");
 
-  // 결과 화면 숨기고, 홈(선물박스) 화면 다시 보여주기
-  resultScreen.style.display = 'none';
-  giftBoxScreen.style.display = 'block';
+  if (resultScreen) resultScreen.style.display = "none";
+  if (giftBoxScreen) giftBoxScreen.style.display = "block";
 
-  // 박스 애니메이션 초기화
-  giftBox.classList.remove('opening');
-  giftBoxContainer.classList.remove('disappear');
+  if (giftBox) giftBox.classList.remove("opening");
+  if (giftBoxContainer) giftBoxContainer.classList.remove("disappear");
 }
 
 /* =========================================================
-   7) 파티클 생성 & 초기 바인딩
+   11) 파티클 생성
    ========================================================= */
 function createParticles() {
-  const container = document.getElementById('particles');
-  const syms = ['✨','🌟','💫','⭐','🌸','🍀','💝','🎈','🦋','🌈'];
-  for (let i=0;i<8;i++){
-    setTimeout(()=>{
-      const el = document.createElement('div');
-      el.className = 'particle';
-      el.textContent = syms[Math.floor(Math.random()*syms.length)];
-      el.style.left = Math.random()*100 + '%';
-      el.style.top = '100%';
-      el.style.animationDelay = Math.random()*2 + 's';
-      el.style.animationDuration = (8 + Math.random()*4) + 's';
+  const container = document.getElementById("particles");
+  if (!container) return;
+
+  const syms = ["✨", "🌟", "💫", "⭐", "🌸", "🍀", "💝", "🎈", "🦋", "🌈"];
+
+  for (let i = 0; i < 8; i++) {
+    setTimeout(() => {
+      const el = document.createElement("div");
+      el.className = "particle";
+      el.textContent = syms[Math.floor(Math.random() * syms.length)];
+      el.style.left = Math.random() * 100 + "%";
+      el.style.top = "100%";
+      el.style.animationDelay = Math.random() * 2 + "s";
+      el.style.animationDuration = 8 + Math.random() * 4 + "s";
       container.appendChild(el);
-      setTimeout(()=> el.remove(), 12000);
-    }, i*300);
+
+      setTimeout(() => {
+        el.remove();
+      }, 12000);
+    }, i * 300);
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  // 버튼 이벤트
-  document.getElementById('openBtn').addEventListener('click', openGiftBox);
-  document.getElementById('homeBtn').addEventListener('click', goHome);
-
-   // 날짜 레이블 업데이트
+/* =========================================================
+   12) 날짜 라벨
+   ========================================================= */
+function updateDateLabel() {
   const today = new Date();
-  const month = today.getMonth() + 1; // 0-11이므로 +1
+  const month = today.getMonth() + 1;
   const date = today.getDate();
-  document.getElementById('dateLabel').textContent = `${month}월 ${date}일의 작은 축복`;
+  setText("dateLabel", `${month}월 ${date}일의 작은 축복`);
+}
 
-  // 파티클 루프
+/* =========================================================
+   13) 감정 버튼 바인딩
+   ========================================================= */
+function bindMoodButtons() {
+  const moodButtons = document.querySelectorAll(".mood-button");
+
+  if (!moodButtons.length) return;
+
+  moodButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      moodButtons.forEach((btn) => btn.classList.remove("active"));
+      button.classList.add("active");
+      selectedMood = button.dataset.mood || "random";
+    });
+  });
+
+  const defaultButton = document.querySelector('.mood-button[data-mood="random"]');
+  if (defaultButton) defaultButton.classList.add("active");
+}
+
+/* =========================================================
+   14) 초기 바인딩
+   ========================================================= */
+document.addEventListener("DOMContentLoaded", () => {
+  const openBtn = document.getElementById("openBtn");
+  const homeBtn = document.getElementById("homeBtn");
+
+  if (openBtn) openBtn.addEventListener("click", openGiftBox);
+  if (homeBtn) homeBtn.addEventListener("click", goHome);
+
+  bindMoodButtons();
+  updateDateLabel();
+
   createParticles();
   setInterval(createParticles, 6000);
 });
