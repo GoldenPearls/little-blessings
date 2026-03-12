@@ -451,21 +451,15 @@ async function saveBlessingCard() {
 
     showSaveLoading();
 
-    // 오버레이 뜨는 느낌 먼저 보여주기
-    await wait(180);
+    await wait(200);
 
     exportArea.classList.add("exporting");
-
-    // export용 캐릭터 반영 대기
-    await wait(180);
-
-    const pixelRatio = Math.min(3, Math.max(2, window.devicePixelRatio || 2));
+    await wait(250);
 
     const dataUrl = await htmlToImage.toPng(exportArea, {
       cacheBust: true,
-      pixelRatio,
-      backgroundColor: "#fffaf7",
-      skipFonts: false
+      pixelRatio: 2,
+      backgroundColor: "#fffaf7"
     });
 
     const link = document.createElement("a");
@@ -478,7 +472,6 @@ async function saveBlessingCard() {
     link.href = dataUrl;
     link.click();
 
-    // 저장 완료 후 너무 빨리 닫히지 않게 살짝 텀
     await wait(250);
   } catch (error) {
     console.error(error);
