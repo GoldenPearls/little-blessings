@@ -1,6 +1,7 @@
 /* =========================================================
    작은 축복 - app.js
    감정 선택 + 랜덤 메시지 + 감정별 카드 테마/캐릭터
+   + 저장용 카드형 결과 확장
    ========================================================= */
 
 /* =========================================================
@@ -180,7 +181,6 @@ const extraFunny = [
 
 /* =========================================================
    3) 감정별 메타 정보
-   - image 경로는 assets 폴더에 실제 파일명 맞춰주세요.
    ========================================================= */
 const moodMeta = {
   tired: {
@@ -267,7 +267,132 @@ const luckyItems = [
 ];
 
 /* =========================================================
-   5) 유틸
+   5) 카드 확장용 데이터
+   ========================================================= */
+const moodExtras = {
+  tired: {
+    subtexts: [
+      "오늘은 속도를 조금 늦춰도 괜찮아요. 충분히 애쓴 하루였으니까요.",
+      "지친 마음을 억지로 끌고 가지 말고, 잠깐 기대어 쉬어가도 좋아요.",
+      "열심히 버틴 당신에게 필요한 건 채찍보다 포근한 쉼이에요."
+    ],
+    actions: [
+      { text: "물 한 잔 천천히 마시기", icon: "💧" },
+      { text: "5분만 눈 감고 있기", icon: "😌" },
+      { text: "따뜻한 차 한 잔 마시기", icon: "🍵" },
+      { text: "오늘은 일찍 눕기", icon: "🛏️" }
+    ],
+    avoids: [
+      { text: "무리한 일정 더 넣기", icon: "⛔" },
+      { text: "스스로 다그치기", icon: "☁️" },
+      { text: "너무 많은 생각", icon: "🌀" },
+      { text: "피곤한데 참기", icon: "🥲" }
+    ]
+  },
+
+  sad: {
+    subtexts: [
+      "마음이 흐린 날에도 당신의 하루는 충분히 소중해요.",
+      "지금의 감정을 급하게 밀어내지 않아도 괜찮아요.",
+      "슬픈 마음도 다정하게 안아주면 조금씩 가벼워질 거예요."
+    ],
+    actions: [
+      { text: "좋아하는 노래 한 곡 듣기", icon: "🎵" },
+      { text: "햇빛 드는 곳 바라보기", icon: "☀️" },
+      { text: "마음 적어보기", icon: "✍️" },
+      { text: "따뜻한 음료 마시기", icon: "☕️" }
+    ],
+    avoids: [
+      { text: "감정을 억지로 숨기기", icon: "🙈" },
+      { text: "지나친 비교", icon: "⚖️" },
+      { text: "혼자 너무 오래 끙끙대기", icon: "🌧️" },
+      { text: "나를 탓하는 말", icon: "💭" }
+    ]
+  },
+
+  stress: {
+    subtexts: [
+      "모든 걸 한 번에 해결하지 않아도 괜찮아요. 하나씩만 해도 충분해요.",
+      "복잡한 하루일수록 마음을 잠깐 멈춰주는 시간이 필요해요.",
+      "당신은 이미 꽤 잘 해내고 있어요. 지금도 충분해요."
+    ],
+    actions: [
+      { text: "어깨 한번 쭉 펴기", icon: "🙆" },
+      { text: "할 일 하나만 먼저 끝내기", icon: "✅" },
+      { text: "10분 산책하기", icon: "🚶" },
+      { text: "심호흡 세 번 하기", icon: "🌬️" }
+    ],
+    avoids: [
+      { text: "모든 걸 완벽하게 하려 하기", icon: "⚡" },
+      { text: "멀티태스킹 욕심", icon: "🧠" },
+      { text: "급하게 결론 내리기", icon: "🚫" },
+      { text: "작은 실수에 오래 매달리기", icon: "🔁" }
+    ]
+  },
+
+  lonely: {
+    subtexts: [
+      "고요한 하루에도 당신의 존재는 충분히 따뜻하고 반짝여요.",
+      "혼자 있는 시간이 꼭 외로운 시간만은 아니길 바라요.",
+      "누군가와 연결되어 있지 않은 것 같아도 당신은 혼자가 아니에요."
+    ],
+    actions: [
+      { text: "창밖 하늘 1분 보기", icon: "🌙" },
+      { text: "좋아하는 사람 떠올리기", icon: "💌" },
+      { text: "나에게 다정한 말 한마디 하기", icon: "🤍" },
+      { text: "작은 기록 남기기", icon: "📓" }
+    ],
+    avoids: [
+      { text: "나만 뒤처졌다고 생각하기", icon: "🥺" },
+      { text: "일부러 더 움츠러들기", icon: "🫥" },
+      { text: "나를 하찮게 보는 말", icon: "💭" },
+      { text: "연락하고 싶은 마음 참기", icon: "📵" }
+    ]
+  },
+
+  comfort: {
+    subtexts: [
+      "오늘은 귀엽고 말랑한 것들이 당신 마음을 지켜줄 거예요.",
+      "큰 위로가 아니어도 괜찮아요. 작은 귀여움 하나면 충분한 날도 있으니까요.",
+      "복냥이가 오늘 당신 옆에 가만히 앉아 있는 기분으로 봐주세요."
+    ],
+    actions: [
+      { text: "귀여운 사진 하나 보기", icon: "🐱" },
+      { text: "간식 하나 천천히 먹기", icon: "🍪" },
+      { text: "좋아하는 향 맡아보기", icon: "🌸" },
+      { text: "작은 미소 한 번 지어보기", icon: "😊" }
+    ],
+    avoids: [
+      { text: "괜히 심각해지기", icon: "🙅" },
+      { text: "기분을 억지로 끌어올리기", icon: "🎭" },
+      { text: "귀여움 부족한 하루", icon: "😼" },
+      { text: "너무 딱딱한 생각", icon: "🪨" }
+    ]
+  },
+
+  random: {
+    subtexts: [
+      "오늘은 어떤 축복이든 당신에게 다정하게 닿기를 바라요.",
+      "예상하지 못한 작은 행운이 하루를 부드럽게 만들어줄지도 몰라요.",
+      "복냥이가 랜덤으로 꺼내온 오늘의 작은 응원이에요."
+    ],
+    actions: [
+      { text: "작은 즐거움 하나 찾기", icon: "🍀" },
+      { text: "좋아하는 것 떠올리기", icon: "✨" },
+      { text: "가볍게 기지개 켜기", icon: "🌿" },
+      { text: "오늘 기분 체크해보기", icon: "📝" }
+    ],
+    avoids: [
+      { text: "좋은 기운 흘려보내기", icon: "☁️" },
+      { text: "괜한 걱정 쌓아두기", icon: "🌀" },
+      { text: "너무 많은 비교", icon: "⚖️" },
+      { text: "나를 대충 대하기", icon: "🥲" }
+    ]
+  }
+};
+
+/* =========================================================
+   6) 유틸
    ========================================================= */
 function lineToBlessing(line) {
   const m = line.match(
@@ -288,15 +413,18 @@ function setText(id, value) {
 }
 
 /* =========================================================
-   6) 상태값
+   7) 상태값
    ========================================================= */
 let currentBlessing = null;
 let currentColor = null;
 let currentItem = null;
+let currentSubtext = "";
+let currentAction = null;
+let currentAvoid = null;
 let selectedMood = "random";
 
 /* =========================================================
-   7) 감정별 메시지 풀 생성
+   8) 감정별 메시지 풀 생성
    ========================================================= */
 function getBlessingPoolByMood(mood) {
   if (mood === "random") {
@@ -320,17 +448,30 @@ function getBlessingPoolByMood(mood) {
 }
 
 /* =========================================================
-   8) UI 업데이트
+   9) UI 업데이트
    ========================================================= */
 function updateUI() {
   if (!currentBlessing || !currentColor || !currentItem) return;
 
   setText("blessingEmoji", currentBlessing.emoji);
   setText("blessingText", currentBlessing.text);
+  setText("blessingSubtext", currentSubtext);
+
   setText("colorIcon", currentColor.icon);
   setText("luckyColor", currentColor.name);
+
   setText("itemIcon", currentItem.icon);
   setText("luckyItem", currentItem.name);
+
+  if (currentAction) {
+    setText("actionIcon", currentAction.icon);
+    setText("todayAction", currentAction.text);
+  }
+
+  if (currentAvoid) {
+    setText("avoidIcon", currentAvoid.icon);
+    setText("todayAvoid", currentAvoid.text);
+  }
 
   const meta = moodMeta[selectedMood] || moodMeta.random;
   const moodBadge = document.getElementById("moodBadge");
@@ -370,7 +511,7 @@ function updateUI() {
 }
 
 /* =========================================================
-   9) 랜덤 축복 생성
+   10) 랜덤 축복 생성
    ========================================================= */
 function generateRandomBlessing() {
   const pool = getBlessingPoolByMood(selectedMood);
@@ -379,11 +520,16 @@ function generateRandomBlessing() {
   currentColor = randomPick(luckyColors);
   currentItem = randomPick(luckyItems);
 
+  const extra = moodExtras[selectedMood] || moodExtras.random;
+  currentSubtext = randomPick(extra.subtexts);
+  currentAction = randomPick(extra.actions);
+  currentAvoid = randomPick(extra.avoids);
+
   updateUI();
 }
 
 /* =========================================================
-   10) 화면 전환
+   11) 화면 전환
    ========================================================= */
 function openGiftBox() {
   const giftBox = document.getElementById("giftBox");
@@ -421,7 +567,7 @@ function goHome() {
 }
 
 /* =========================================================
-   11) 파티클 생성
+   12) 파티클 생성
    ========================================================= */
 function createParticles() {
   const container = document.getElementById("particles");
@@ -448,7 +594,7 @@ function createParticles() {
 }
 
 /* =========================================================
-   12) 날짜 라벨
+   13) 날짜 라벨
    ========================================================= */
 function updateDateLabel() {
   const today = new Date();
@@ -458,7 +604,7 @@ function updateDateLabel() {
 }
 
 /* =========================================================
-   13) 감정 버튼 바인딩
+   14) 감정 버튼 바인딩
    ========================================================= */
 function bindMoodButtons() {
   const moodButtons = document.querySelectorAll(".mood-button");
@@ -478,7 +624,7 @@ function bindMoodButtons() {
 }
 
 /* =========================================================
-   14) 초기 바인딩
+   15) 초기 바인딩
    ========================================================= */
 document.addEventListener("DOMContentLoaded", () => {
   const openBtn = document.getElementById("openBtn");
