@@ -171,5 +171,31 @@
 
   <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.js"></script>
   <script src="scripts/app.js"></script>
+
+  <!-- 저장 로딩 오버레이 -->
+  <div class="save-loading-overlay" id="saveLoadingOverlay" aria-hidden="true">
+    <div class="save-loading-card">
+      <div class="save-loading-character-wrap">
+        <img
+          src="assets/blessing_main.png"
+          alt="복냥이"
+          class="save-loading-character"
+          id="saveLoadingCharacter"
+        />
+      </div>
+  
+      <div class="save-loading-title">축복 카드 저장 중</div>
+      <div class="save-loading-text">
+        오늘의 작은 축복을<br />
+        예쁘게 포장하고 있어요
+      </div>
+  
+      <div class="save-loading-dots" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+</div>
 </body>
 </html>
