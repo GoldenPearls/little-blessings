@@ -411,6 +411,87 @@ function wait(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+function showSaveLoading() {
+  const overlay = document.getElementById("saveLoadingOverlay");
+  const loadingCharacter = document.getElementById("saveLoadingCharacter");
+  const topCharacter = document.getElementById("topCharacterImage");
+
+  if (loadingCharacter && topCharacter?.src) {
+    loadingCharacter.src = topCharacter.src;
+    loadingCharacter.alt = topCharacter.alt || "복냥이";
+  }
+
+  if (overlay) {
+    overlay.classList.add("show");
+    overlay.setAttribute("aria-hidden", "false");
+  }
+}
+
+function hideSaveLoading() {
+  const overlay = document.getElementById("saveLoadingOverlay");
+  if (overlay) {
+    overlay.classList.remove("show");
+    overlay.setAttribute("aria-hidden", "true");
+  }
+}
+
+async function saveBlessingCard() {
+  const exportArea = document.getElementById("exportArea");
+  const saveBtn = document.getElementById("saveBtn");
+  const saveBtnText = saveBtn?.querySelector(".btn-txt");
+
+  if (!exportArea || typeof htmlToImage === "undefined") {
+    alert("저장 기능을 사용할 수 없어요.");
+    return;
+  }
+
+  try {
+    if (saveBtn) saveBtn.disabled = true;
+    if (saveBtnText) saveBtnText.textContent = "저장 중...";
+
+    showSaveLoading();
+
+    // 오버레이 뜨는 느낌 먼저 보여주기
+    await wait(180);
+
+    exportArea.classList.add("exporting");
+
+    // export용 캐릭터 반영 대기
+    await wait(180);
+
+    const pixelRatio = Math.min(3, Math.max(2, window.devicePixelRatio || 2));
+
+    const dataUrl = await htmlToImage.toPng(exportArea, {
+      cacheBust: true,
+      pixelRatio,
+      backgroundColor: "#fffaf7",
+      skipFonts: false
+    });
+
+    const link = document.createElement("a");
+    const today = new Date();
+    const fileName = `small-blessing-${today.getFullYear()}-${String(
+      today.getMonth() + 1
+    ).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}.png`;
+
+    link.download = fileName;
+    link.href = dataUrl;
+    link.click();
+
+    // 저장 완료 후 너무 빨리 닫히지 않게 살짝 텀
+    await wait(250);
+  } catch (error) {
+    console.error(error);
+    alert("이미지 저장 중 문제가 생겼어요.");
+  } finally {
+    exportArea.classList.remove("exporting");
+    hideSaveLoading();
+
+    if (saveBtn) saveBtn.disabled = false;
+    if (saveBtnText) saveBtnText.textContent = "축복 카드 저장";
+  }
+}
+
 /* =========================================================
    7) 상태값
    ========================================================= */
