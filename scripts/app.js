@@ -1,7 +1,7 @@
 /* =========================================================
    작은 축복 - app.js
    감정 선택 + 랜덤 메시지 + 감정별 카드 테마/캐릭터
-   + 저장용 카드형 결과 확장
+   + 저장용 카드형 결과 + 저장/다시뽑기
    ========================================================= */
 
 /* =========================================================
@@ -289,7 +289,6 @@ const moodExtras = {
       { text: "피곤한데 참기", icon: "🥲" }
     ]
   },
-
   sad: {
     subtexts: [
       "마음이 흐린 날에도 당신의 하루는 충분히 소중해요.",
@@ -309,7 +308,6 @@ const moodExtras = {
       { text: "나를 탓하는 말", icon: "💭" }
     ]
   },
-
   stress: {
     subtexts: [
       "모든 걸 한 번에 해결하지 않아도 괜찮아요. 하나씩만 해도 충분해요.",
@@ -329,7 +327,6 @@ const moodExtras = {
       { text: "작은 실수에 오래 매달리기", icon: "🔁" }
     ]
   },
-
   lonely: {
     subtexts: [
       "고요한 하루에도 당신의 존재는 충분히 따뜻하고 반짝여요.",
@@ -349,7 +346,6 @@ const moodExtras = {
       { text: "연락하고 싶은 마음 참기", icon: "📵" }
     ]
   },
-
   comfort: {
     subtexts: [
       "오늘은 귀엽고 말랑한 것들이 당신 마음을 지켜줄 거예요.",
@@ -369,7 +365,6 @@ const moodExtras = {
       { text: "너무 딱딱한 생각", icon: "🪨" }
     ]
   },
-
   random: {
     subtexts: [
       "오늘은 어떤 축복이든 당신에게 다정하게 닿기를 바라요.",
@@ -410,6 +405,10 @@ function randomPick(arr) {
 function setText(id, value) {
   const el = document.getElementById(id);
   if (el) el.textContent = value;
+}
+
+function wait(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 /* =========================================================
@@ -476,15 +475,21 @@ function updateUI() {
   const meta = moodMeta[selectedMood] || moodMeta.random;
   const moodBadge = document.getElementById("moodBadge");
   const card = document.getElementById("blessingCard") || document.querySelector(".blessing-card");
-  const characterImg = document.querySelector(".image_main_character");
+  const topCharacterImg = document.getElementById("topCharacterImage");
+  const exportCharacterImg = document.getElementById("exportCharacterImage");
 
   if (moodBadge) {
     moodBadge.textContent = meta.label;
   }
 
-  if (characterImg) {
-    characterImg.src = meta.image;
-    characterImg.alt = meta.label;
+  if (topCharacterImg) {
+    topCharacterImg.src = meta.image;
+    topCharacterImg.alt = meta.label;
+  }
+
+  if (exportCharacterImg) {
+    exportCharacterImg.src = meta.image;
+    exportCharacterImg.alt = meta.label;
   }
 
   if (card) {
@@ -496,12 +501,10 @@ function updateUI() {
       "theme-comfort",
       "theme-random"
     );
-
     card.classList.add(meta.theme);
 
     card.style.transform = "scale(0.98)";
     card.style.transition = "transform .2s";
-
     requestAnimationFrame(() => {
       setTimeout(() => {
         card.style.transform = "scale(1)";
@@ -548,7 +551,6 @@ function openGiftBox() {
       resultScreen.style.display = "block";
       resultScreen.classList.add("screen-transition");
     }
-
     generateRandomBlessing();
   }, 1800);
 }
@@ -566,8 +568,61 @@ function goHome() {
   if (giftBoxContainer) giftBoxContainer.classList.remove("disappear");
 }
 
+function rerollBlessing() {
+  generateRandomBlessing();
+}
+
 /* =========================================================
-   12) 파티클 생성
+   12) 저장 기능
+   ========================================================= */
+async function saveBlessingCard() {
+  const exportArea = document.getElementById("exportArea");
+  const saveBtn = document.getElementById("saveBtn");
+  const saveBtnText = saveBtn?.querySelector(".btn-txt");
+
+  if (!exportArea || typeof htmlToImage === "undefined") {
+    alert("저장 기능을 사용할 수 없어요.");
+    return;
+  }
+
+  try {
+    if (saveBtn) saveBtn.disabled = true;
+    if (saveBtnText) saveBtnText.textContent = "저장 중...";
+
+    exportArea.classList.add("exporting");
+
+    await wait(180);
+
+    const pixelRatio = Math.min(3, Math.max(2, window.devicePixelRatio || 2));
+
+    const dataUrl = await htmlToImage.toPng(exportArea, {
+      cacheBust: true,
+      pixelRatio,
+      backgroundColor: "#fffaf7",
+      skipFonts: false
+    });
+
+    const link = document.createElement("a");
+    const today = new Date();
+    const fileName = `small-blessing-${today.getFullYear()}-${String(
+      today.getMonth() + 1
+    ).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}.png`;
+
+    link.download = fileName;
+    link.href = dataUrl;
+    link.click();
+  } catch (error) {
+    console.error(error);
+    alert("이미지 저장 중 문제가 생겼어요.");
+  } finally {
+    exportArea.classList.remove("exporting");
+    if (saveBtn) saveBtn.disabled = false;
+    if (saveBtnText) saveBtnText.textContent = "축복 카드 저장";
+  }
+}
+
+/* =========================================================
+   13) 파티클 생성
    ========================================================= */
 function createParticles() {
   const container = document.getElementById("particles");
@@ -594,7 +649,7 @@ function createParticles() {
 }
 
 /* =========================================================
-   13) 날짜 라벨
+   14) 날짜 라벨
    ========================================================= */
 function updateDateLabel() {
   const today = new Date();
@@ -604,11 +659,10 @@ function updateDateLabel() {
 }
 
 /* =========================================================
-   14) 감정 버튼 바인딩
+   15) 감정 버튼 바인딩
    ========================================================= */
 function bindMoodButtons() {
   const moodButtons = document.querySelectorAll(".mood-button");
-
   if (!moodButtons.length) return;
 
   moodButtons.forEach((button) => {
@@ -620,18 +674,25 @@ function bindMoodButtons() {
   });
 
   const defaultButton = document.querySelector('.mood-button[data-mood="random"]');
-  if (defaultButton) defaultButton.classList.add("active");
+  if (defaultButton) {
+    defaultButton.classList.add("active");
+    selectedMood = "random";
+  }
 }
 
 /* =========================================================
-   15) 초기 바인딩
+   16) 초기 바인딩
    ========================================================= */
 document.addEventListener("DOMContentLoaded", () => {
   const openBtn = document.getElementById("openBtn");
   const homeBtn = document.getElementById("homeBtn");
+  const rerollBtn = document.getElementById("rerollBtn");
+  const saveBtn = document.getElementById("saveBtn");
 
   if (openBtn) openBtn.addEventListener("click", openGiftBox);
   if (homeBtn) homeBtn.addEventListener("click", goHome);
+  if (rerollBtn) rerollBtn.addEventListener("click", rerollBlessing);
+  if (saveBtn) saveBtn.addEventListener("click", saveBlessingCard);
 
   bindMoodButtons();
   updateDateLabel();
