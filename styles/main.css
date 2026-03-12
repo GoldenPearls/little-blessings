@@ -368,3 +368,98 @@ body {
   .blessing-card { min-height: 240px; padding: 20px 15px; }
   .action-buttons { margin-top: 15px; }
 }
+
+/* ====== MOOD SELECT ====== */
+.mood-section {
+  margin-top: 8px;
+}
+
+.mood-title {
+  font-family: 'OngleebDaisy','Noto Sans KR',sans-serif;
+  font-size: 1rem;
+  color: #6B7684;
+  margin-bottom: 12px;
+}
+
+.mood-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.mood-button {
+  border: 2px solid rgba(203,232,228,.7);
+  background: rgba(255,255,255,.9);
+  border-radius: 16px;
+  padding: 12px 10px;
+  font-size: 0.9rem;
+  color: #4A5C6A;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .25s ease;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+.mood-button:hover {
+  transform: translateY(-2px);
+  background: #fff;
+  box-shadow: 0 8px 18px rgba(0,0,0,.08);
+}
+
+.mood-button.active {
+  background: linear-gradient(145deg, #C7D2FE, #E9D5FF);
+  border-color: #B39DDB;
+  color: #4A5568;
+  box-shadow: 0 8px 20px rgba(201,180,255,.35);
+}
+
+/* 결과 감정 배지 */
+.mood-badge {
+  display: inline-block;
+  margin: -4px auto 8px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  background: rgba(255,255,255,.8);
+  color: #6B7684;
+  border: 1.5px solid rgba(179,157,219,.35);
+}
+
+/* 감정별 카드 테마 */
+.blessing-card.theme-tired {
+  background: linear-gradient(135deg, #F8FBFF, #DCEBFF);
+  border-color: rgba(160, 190, 255, 0.45);
+}
+
+.blessing-card.theme-sad {
+  background: linear-gradient(135deg, #F7F4FF, #E9E4FF);
+  border-color: rgba(180, 170, 255, 0.45);
+}
+
+.blessing-card.theme-stress {
+  background: linear-gradient(135deg, #FFF8EC, #FFE4CC);
+  border-color: rgba(255, 180, 120, 0.45);
+}
+
+.blessing-card.theme-lonely {
+  background: linear-gradient(135deg, #EEF4FF, #DDE7FF);
+  border-color: rgba(150, 170, 230, 0.45);
+}
+
+.blessing-card.theme-comfort {
+  background: linear-gradient(135deg, #FFF9F2, #FFE9E1);
+  border-color: rgba(255, 180, 170, 0.45);
+}
+
+.blessing-card.theme-random {
+  background: linear-gradient(135deg, rgba(255, 249, 230, 0.95), rgba(248, 214, 194, 0.9));
+  border-color: rgba(248, 214, 194, 0.6);
+}
+
+@media (max-width: 480px) {
+  .mood-grid {
+    grid-template-columns: 1fr;
+  }
+}
