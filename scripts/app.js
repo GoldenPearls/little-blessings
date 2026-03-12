@@ -211,7 +211,7 @@ const moodMeta = {
   random: {
     label: "🎲 랜덤 축복",
     theme: "theme-random",
-    image: "assets/blessing_main.png"
+    image: "assets/cat_random.png"
   }
 };
 
