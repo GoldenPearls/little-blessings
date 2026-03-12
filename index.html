@@ -23,25 +23,38 @@
   <div class="particles" id="particles"></div>
 
   <div class="container">
-    <!-- 첫 화면 -->
-    <div class="gift-box-screen" id="giftBoxScreen">
-      <div class="header">
-        <h1 class="title">작은 축복</h1>
-        <p class="subtitle">오늘 당신을 위한 따뜻한 메시지</p>
+   <!-- 첫 화면 -->
+  <div class="gift-box-screen" id="giftBoxScreen">
+    <div class="header">
+      <h1 class="title">작은 축복</h1>
+      <p class="subtitle">오늘 당신을 위한 따뜻한 메시지</p>
+    </div>
+  
+    <div class="gift-box-container" id="giftBoxContainer">
+      <div class="gift-box" id="giftBox">
+        <div class="gift-ribbon-h"></div>
+        <div class="gift-ribbon-v"></div>
+        <div class="gift-bow"></div>
       </div>
-
-      <div class="gift-box-container" id="giftBoxContainer">
-        <div class="gift-box" id="giftBox">
-          <div class="gift-ribbon-h"></div>
-          <div class="gift-ribbon-v"></div>
-          <div class="gift-bow"></div>
-        </div>
+    </div>
+  
+    <div class="mood-section">
+      <div class="mood-title">오늘 내 마음은?</div>
+  
+      <div class="mood-grid">
+        <button class="mood-button" data-mood="tired">😴 조금 지침</button>
+        <button class="mood-button" data-mood="sad">💧 괜히 울적함</button>
+        <button class="mood-button" data-mood="stress">⚡ 스트레스 많음</button>
+        <button class="mood-button" data-mood="lonely">🌙 외로운 날</button>
+        <button class="mood-button" data-mood="comfort">🐾 그냥 귀여운 위로</button>
+        <button class="mood-button" data-mood="random">🎲 아무거나 랜덤</button>
       </div>
-
+  
       <button class="main-button" id="openBtn">
-        오늘의 작은 축복 열기 <span class="button-icon">🎁</span>
+        오늘의 작은 축복 받기 <span class="button-icon">🎁</span>
       </button>
     </div>
+  </div>
 
     <!-- 결과 화면 -->
     <div class="result-screen" id="resultScreen">
@@ -58,6 +71,7 @@
       <div id="exportArea">
         <div class="blessing-card">
           <div class="card-label" id="dateLabel">10월 20일의 작은 축복</div>
+          <div class="mood-badge" id="moodBadge">😴 조금 지친 날</div>
           <div class="blessing-content">
             <span class="blessing-emoji" id="blessingEmoji">📱</span>
             <div class="blessing-text" id="blessingText">당신의 하루가 따스하게 빛나길 바라요</div>
