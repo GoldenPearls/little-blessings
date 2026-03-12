@@ -23,7 +23,11 @@
 }
 
 /* ====== RESET ====== */
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 /* 이모지 전용 폰트 스택 */
 :root {
@@ -63,9 +67,17 @@ body {
   animation: floatParticle 12s ease-in-out infinite;
 }
 @keyframes floatParticle {
-  0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0; }
-  10%, 90% { opacity: 0.6; }
-  50% { transform: translateY(-120px) rotate(180deg); opacity: 1; }
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+  10%, 90% {
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(-120px) rotate(180deg);
+    opacity: 1;
+  }
 }
 
 /* ====== APP CARD ====== */
@@ -90,7 +102,6 @@ body {
 .container::-webkit-scrollbar {
   width: 6px;
 }
-
 .container::-webkit-scrollbar-thumb {
   background: rgba(139, 115, 85, 0.3);
   border-radius: 3px;
@@ -128,7 +139,6 @@ body {
   margin: 0 auto 15px;
   animation: giftFloat 3s ease-in-out infinite;
 }
-
 @keyframes giftFloat {
   0%,100% { transform: translateY(0); }
   50% { transform: translateY(-6px); }
@@ -147,7 +157,6 @@ body {
   box-shadow: 0 12px 30px rgba(230,195,166,0.4);
   transition: all .6s cubic-bezier(0.175,0.885,0.32,1.275);
 }
-
 .gift-ribbon-h {
   position: absolute;
   top: 50%;
@@ -159,7 +168,6 @@ body {
   border-radius: 2px;
   box-shadow: 0 3px 12px rgba(141,179,255,.3);
 }
-
 .gift-ribbon-v {
   position: absolute;
   left: 50%;
@@ -171,7 +179,6 @@ body {
   border-radius: 2px;
   box-shadow: 0 3px 12px rgba(141,179,255,.3);
 }
-
 .gift-bow {
   position: absolute;
   top: -12px;
@@ -184,7 +191,6 @@ body {
   border: 2px solid rgba(255,255,255,0.8);
   box-shadow: 0 6px 16px rgba(201, 180, 255, .4);
 }
-
 .gift-bow::before,
 .gift-bow::after {
   content: '';
@@ -196,12 +202,10 @@ body {
   border-radius: 50%;
   transform: translateY(-50%);
 }
-
 .gift-bow::before {
   left: -6px;
   transform: translateY(-50%) rotate(-20deg);
 }
-
 .gift-bow::after {
   right: -6px;
   transform: translateY(-50%) rotate(20deg);
@@ -210,7 +214,6 @@ body {
 .gift-box.opening {
   animation: boxShake .8s ease-in-out;
 }
-
 @keyframes boxShake {
   0%,100% { transform: translate(-50%,-50%) rotate(0); }
   10% { transform: translate(-50%,-50%) rotate(-2deg) scale(1.05); }
@@ -225,7 +228,6 @@ body {
 .gift-box-container.disappear {
   animation: disappear 1s ease-in-out forwards;
 }
-
 @keyframes disappear {
   0% { opacity: 1; transform: scale(1); }
   50% { opacity: .7; transform: scale(1.2); }
@@ -254,18 +256,15 @@ body {
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
 }
-
 .main-button:hover {
   transform: translateY(-3px) scale(1.02);
   box-shadow: 0 12px 35px rgba(201, 180, 255, .45);
 }
-
 .button-icon {
   display: inline-block;
   margin-left: 6px;
   animation: giftBounce 2s ease-in-out infinite;
 }
-
 @keyframes giftBounce {
   0%,100% { transform: scale(1); }
   50% { transform: scale(1.1); }
@@ -275,21 +274,18 @@ body {
 .mood-section {
   margin-top: 8px;
 }
-
 .mood-title {
   font-family: 'OngleebDaisy','Noto Sans KR',sans-serif;
   font-size: 1rem;
   color: #6B7684;
   margin-bottom: 12px;
 }
-
 .mood-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
   margin-bottom: 14px;
 }
-
 .mood-button {
   border: 2px solid rgba(203,232,228,.7);
   background: rgba(255,255,255,.9);
@@ -302,13 +298,11 @@ body {
   transition: all .25s ease;
   font-family: 'Noto Sans KR', sans-serif;
 }
-
 .mood-button:hover {
   transform: translateY(-2px);
   background: #fff;
   box-shadow: 0 8px 18px rgba(0,0,0,.08);
 }
-
 .mood-button.active {
   background: linear-gradient(145deg, #C7D2FE, #E9D5FF);
   border-color: #B39DDB;
@@ -324,21 +318,19 @@ body {
 /* 화면용 대표 캐릭터 */
 .blessing-character {
   width: 100%;
-  max-width: 280px;
-  height: auto;
-  margin: 0 auto 10px;
+  max-width: 250px;
+  margin: 0 auto -8px;
   position: relative;
+  z-index: 2;
   animation: resultFloat 3s ease-in-out infinite;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-
 @keyframes resultFloat {
   0%,100% { transform: translateY(0); }
   50% { transform: translateY(-8px); }
 }
-
 .image_main_character {
   width: 100%;
   max-width: 280px;
@@ -354,6 +346,8 @@ body {
   margin: 0 auto;
   width: 100%;
   max-width: 420px;
+  position: relative;
+  z-index: 1;
 }
 
 /* ====== 기본 카드 ====== */
@@ -376,15 +370,15 @@ body {
 
 .card-label {
   align-self: center;
-  background: #B39DDB;
+  background: linear-gradient(145deg, #B39DDB, #C8B4EE);
   color: #fff;
-  padding: 6px 16px;
-  border-radius: 16px;
+  padding: 7px 18px;
+  border-radius: 999px;
   font-size: 0.82rem;
   font-weight: 700;
   line-height: 1;
-  box-shadow: 0 2px 6px rgba(0,0,0,.08);
-  margin-top: -6px;
+  box-shadow: 0 4px 10px rgba(179,157,219,.28);
+  margin-top: -4px;
 }
 
 .blessing-content {
@@ -395,26 +389,30 @@ body {
 
 .blessing-emoji {
   font-family: var(--emoji-fonts), system-ui, -apple-system, 'Noto Sans KR', sans-serif;
-  font-size: 2.6rem;
+  font-size: 2.3rem;
   line-height: 1;
   display: block;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .blessing-text {
   font-family: 'OngleebDaisy','Noto Sans KR', var(--emoji-fonts), system-ui, sans-serif;
-  font-size: 1.12rem;
-  line-height: 1.6;
-  color: #4A5C6A;
-  font-weight: 600;
-  margin-bottom: 8px;
+  font-size: 1.28rem;
+  line-height: 1.65;
+  color: #4B5568;
+  font-weight: 700;
+  margin-bottom: 12px;
+  max-width: 290px;
+  margin-left: auto;
+  margin-right: auto;
+  word-break: keep-all;
 }
 
 .blessing-subtext {
-  font-size: 0.92rem;
-  line-height: 1.6;
-  color: #6B7684;
-  max-width: 300px;
+  font-size: 0.96rem;
+  line-height: 1.75;
+  color: #6F7A89;
+  max-width: 295px;
   margin: 0 auto;
   word-break: keep-all;
 }
@@ -422,31 +420,32 @@ body {
 /* ====== 감정 배지 ====== */
 .mood-badge {
   display: inline-block;
-  margin: -4px auto 8px;
-  padding: 7px 14px;
+  margin: 0 auto 10px;
+  padding: 8px 15px;
   border-radius: 999px;
   font-size: 0.82rem;
   font-weight: 700;
-  background: rgba(255,255,255,.8);
+  background: rgba(255,255,255,.92);
   color: #6B7684;
-  border: 1.5px solid rgba(179,157,219,.35);
+  border: 1.5px solid rgba(179,157,219,.28);
+  box-shadow: 0 3px 8px rgba(0,0,0,0.03);
 }
 
 /* ====== POSTCARD CARD ====== */
 .postcard-card {
   position: relative;
   overflow: hidden;
-  min-height: 540px;
-  padding: 24px 18px 20px;
-  border-radius: 26px;
+  min-height: 560px;
+  padding: 28px 20px 22px;
+  border-radius: 30px;
   background:
-    radial-gradient(circle at top right, rgba(255,255,255,0.85), rgba(255,255,255,0) 30%),
-    linear-gradient(180deg, rgba(255,255,255,0.75), rgba(255,255,255,0.55)),
-    #fffaf4;
-  border: 2px solid rgba(255,255,255,0.85);
+    radial-gradient(circle at top right, rgba(255,255,255,0.92), rgba(255,255,255,0) 32%),
+    linear-gradient(180deg, rgba(255,255,255,0.82), rgba(255,255,255,0.60)),
+    #fffaf6;
+  border: 2px solid rgba(255,255,255,0.95);
   box-shadow:
-    0 14px 35px rgba(0,0,0,0.08),
-    inset 0 0 0 1px rgba(255,255,255,0.65);
+    0 18px 40px rgba(0,0,0,0.08),
+    inset 0 0 0 1px rgba(255,255,255,0.72);
 }
 
 /* 종이 느낌 */
@@ -468,21 +467,13 @@ body {
   z-index: 1;
 }
 
-.card-mini-title {
-  font-family: 'OngleebDaisy','Noto Sans KR',sans-serif;
-  font-size: 1rem;
-  color: #8B7355;
-  margin-bottom: 8px;
-}
-
 .card-top {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 12px;
+  gap: 7px;
+  margin-bottom: 16px;
 }
-
 .card-middle {
   display: flex;
   flex-direction: column;
@@ -490,12 +481,21 @@ body {
   gap: 12px;
   margin-bottom: 14px;
 }
+.card-bottom {
+  width: 100%;
+}
+
+.card-mini-title {
+  font-family: 'OngleebDaisy','Noto Sans KR',sans-serif;
+  font-size: 1.02rem;
+  color: #8B7355;
+  margin-bottom: 4px;
+}
 
 /* 저장할 때만 카드 내부 캐릭터 보이게 */
 .export-only {
   display: none;
 }
-
 #exportArea.exporting .export-only {
   display: flex;
 }
@@ -505,7 +505,6 @@ body {
   justify-content: center;
   align-items: center;
 }
-
 .postcard-character {
   width: 100%;
   max-width: 170px;
@@ -513,17 +512,8 @@ body {
   object-fit: contain;
   filter: drop-shadow(0 8px 14px rgba(0,0,0,0.08));
 }
-
 #exportArea.exporting .postcard-character-wrap {
   margin-bottom: 10px;
-}
-
-.card-signature {
-  margin-top: 16px;
-  text-align: center;
-  font-size: 0.8rem;
-  color: #9B8C7A;
-  font-family: 'MitmiFont','Noto Sans KR',sans-serif;
 }
 
 /* ====== 행운 정보 ====== */
@@ -532,62 +522,71 @@ body {
   max-width: 420px;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin: 2px 0 0;
+  gap: 12px;
+  margin: 8px 0 0;
 }
-
 .fortune-info-extended {
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 12px;
   margin-top: 8px;
 }
 
 .fortune-item {
-  background: rgba(255,255,255,.85);
-  border-radius: 12px;
-  padding: 10px 8px;
+  background: rgba(255,255,255,.88);
+  border-radius: 16px;
+  padding: 14px 10px;
   text-align: center;
-  border: 2px solid rgba(203,232,228,.5);
-  min-height: 64px;
+  border: 2px solid rgba(203,232,228,.55);
+  min-height: 78px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.03);
 }
-
 .fortune-item-wide {
   grid-column: 1 / -1;
+  padding-top: 16px;
+  padding-bottom: 16px;
 }
 
 .fortune-label {
-  font-size: .72rem;
-  color: #6B7684;
-  margin-bottom: 4px;
-  font-weight: 600;
-}
-
-.fortune-value {
-  font-size: .88rem;
-  color: #8B7355;
+  font-size: 0.74rem;
+  color: #7A8593;
+  margin-bottom: 6px;
   font-weight: 700;
+}
+.fortune-value {
+  font-size: 1rem;
+  color: #8B7355;
+  font-weight: 800;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 7px;
 }
-
 .single-line-value {
   justify-content: flex-start;
   text-align: left;
-  padding-left: 10px;
-  padding-right: 10px;
-  line-height: 1.45;
-}
-
-.fortune-icon {
+  padding-left: 14px;
+  padding-right: 14px;
+  line-height: 1.5;
   font-size: 1rem;
+}
+.fortune-icon {
+  font-size: 1.05rem;
   transform: translateY(1px);
   font-family: var(--emoji-fonts), system-ui, sans-serif;
   flex-shrink: 0;
+}
+
+/* ====== SIGNATURE ====== */
+.card-signature {
+  margin-top: 18px;
+  text-align: center;
+  font-size: 0.82rem;
+  color: #9B8C7A;
+  font-family: 'MitmiFont','Noto Sans KR',sans-serif;
+  letter-spacing: 0.2px;
 }
 
 /* ====== ACTION BUTTONS ====== */
@@ -595,17 +594,16 @@ body {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 14px;
+  gap: 12px;
+  margin-top: 18px;
 }
-
 .action-button {
   font-family: 'MitmiFont','Noto Sans KR',sans-serif;
   background: rgba(255,255,255,.88);
   border: 2px solid #CBE8E4;
-  border-radius: 15px;
-  padding: 10px 18px;
-  font-size: 0.9rem;
+  border-radius: 18px;
+  padding: 12px 18px;
+  font-size: 0.92rem;
   line-height: 1;
   cursor: pointer;
   color: #4A5C6A;
@@ -619,26 +617,42 @@ body {
   letter-spacing: .2px;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
-  min-width: 120px;
+  min-width: 132px;
 }
-
 .action-button:hover {
   background: rgba(203,232,228,.9);
   border-color: #8B7355;
   color: #8B7355;
   transform: translateY(-2px);
 }
-
 .action-button:disabled {
   opacity: 0.65;
   cursor: wait;
   transform: none;
 }
 
+#saveBtn {
+  background: linear-gradient(145deg, #C7D2FE, #E9D5FF);
+  border-color: rgba(179,157,219,0.55);
+  color: #4A5568;
+  box-shadow: 0 8px 20px rgba(201,180,255,.28);
+}
+#saveBtn:hover {
+  background: linear-gradient(145deg, #BFD0FF, #E3CCFF);
+  border-color: #B39DDB;
+  color: #4A5568;
+  transform: translateY(-2px) scale(1.01);
+}
+#rerollBtn {
+  background: rgba(255,255,255,.92);
+}
+#homeBtn {
+  background: rgba(255,255,255,.82);
+}
+
 .btn-ic {
   font-family: var(--emoji-fonts), 'Noto Sans KR', sans-serif;
 }
-
 .btn-txt {
   white-space: nowrap;
 }
@@ -655,7 +669,6 @@ body {
 .screen-transition {
   animation: screenFadeIn 0.9s ease-in-out;
 }
-
 @keyframes screenFadeIn {
   0% { opacity: 0; transform: translateY(30px) scale(.96); }
   100% { opacity: 1; transform: translateY(0) scale(1); }
@@ -669,7 +682,6 @@ body {
     linear-gradient(135deg, #F4F9FF, #DDEBFF);
   border-color: rgba(160, 190, 255, 0.5);
 }
-
 .blessing-card.theme-sad {
   background:
     radial-gradient(circle at top right, rgba(255,255,255,0.88), rgba(255,255,255,0) 30%),
@@ -677,7 +689,6 @@ body {
     linear-gradient(135deg, #F7F2FF, #E8E0FF);
   border-color: rgba(180, 170, 255, 0.5);
 }
-
 .blessing-card.theme-stress {
   background:
     radial-gradient(circle at top right, rgba(255,255,255,0.88), rgba(255,255,255,0) 30%),
@@ -685,7 +696,6 @@ body {
     linear-gradient(135deg, #FFF7EC, #FFE5CF);
   border-color: rgba(255, 180, 120, 0.5);
 }
-
 .blessing-card.theme-lonely {
   background:
     radial-gradient(circle at top right, rgba(255,255,255,0.88), rgba(255,255,255,0) 30%),
@@ -693,7 +703,6 @@ body {
     linear-gradient(135deg, #EEF3FF, #DCE6FF);
   border-color: rgba(150, 170, 230, 0.5);
 }
-
 .blessing-card.theme-comfort {
   background:
     radial-gradient(circle at top right, rgba(255,255,255,0.88), rgba(255,255,255,0) 30%),
@@ -701,13 +710,32 @@ body {
     linear-gradient(135deg, #FFF9F3, #FFE7E0);
   border-color: rgba(255, 180, 170, 0.5);
 }
-
 .blessing-card.theme-random {
   background:
     radial-gradient(circle at top right, rgba(255,255,255,0.88), rgba(255,255,255,0) 30%),
     linear-gradient(180deg, rgba(255,255,255,0.7), rgba(255,255,255,0.55)),
     linear-gradient(135deg, #FFF9E9, #FBE2D6);
   border-color: rgba(248, 214, 194, 0.7);
+}
+
+/* 감정별 카드 제목 톤 */
+.blessing-card.theme-tired .card-mini-title {
+  color: #7E8FB3;
+}
+.blessing-card.theme-sad .card-mini-title {
+  color: #8B7FB5;
+}
+.blessing-card.theme-stress .card-mini-title {
+  color: #B98758;
+}
+.blessing-card.theme-lonely .card-mini-title {
+  color: #7888B5;
+}
+.blessing-card.theme-comfort .card-mini-title {
+  color: #B57D73;
+}
+.blessing-card.theme-random .card-mini-title {
+  color: #9A8467;
 }
 
 /* ====== RESPONSIVE ====== */
@@ -739,14 +767,15 @@ body {
     grid-template-columns: 1fr;
   }
 
-  .postcard-card {
-    min-height: 520px;
-    padding: 20px 14px 18px;
-  }
-
   .blessing-character {
     max-width: 220px;
-    margin-bottom: 8px;
+    margin: 0 auto -4px;
+  }
+
+  .postcard-card {
+    min-height: 540px;
+    padding: 22px 14px 18px;
+    border-radius: 26px;
   }
 
   .postcard-character {
@@ -754,16 +783,24 @@ body {
   }
 
   .blessing-text {
-    font-size: 1rem;
-    line-height: 1.5;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    max-width: 260px;
   }
 
   .blessing-subtext {
-    font-size: 0.86rem;
+    font-size: 0.88rem;
+    line-height: 1.68;
+    max-width: 260px;
+  }
+
+  .fortune-item {
+    border-radius: 14px;
+    padding: 12px 8px;
   }
 
   .fortune-value {
-    font-size: 0.84rem;
+    font-size: 0.9rem;
     gap: 6px;
   }
 
@@ -774,7 +811,7 @@ body {
 
   .action-button {
     width: 100%;
-    max-width: 220px;
+    max-width: 240px;
   }
 }
 
