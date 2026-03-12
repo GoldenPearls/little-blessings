@@ -69,15 +69,29 @@
 
       <!-- ⬇️ 캡처 범위 시작 -->
       <div id="exportArea">
-        <div class="blessing-card">
+      <div class="blessing-card postcard-card" id="blessingCard">
+        <div class="card-top">
+          <div class="card-mini-title">오늘의 작은 축복</div>
           <div class="card-label" id="dateLabel">10월 20일의 작은 축복</div>
           <div class="mood-badge" id="moodBadge">😴 조금 지친 날</div>
-          <div class="blessing-content">
-            <span class="blessing-emoji" id="blessingEmoji">📱</span>
-            <div class="blessing-text" id="blessingText">당신의 하루가 따스하게 빛나길 바라요</div>
+        </div>
+    
+        <div class="card-middle">
+          <div class="postcard-character-wrap">
+            <img src="assets/blessing_main.png" alt="복냥이" class="image_main_character postcard-character" />
           </div>
     
-          <div class="fortune-info">
+          <div class="blessing-content">
+            <span class="blessing-emoji" id="blessingEmoji">🌙</span>
+            <div class="blessing-text" id="blessingText">오늘 하루도 정말 수고 많으셨어요.</div>
+            <div class="blessing-subtext" id="blessingSubtext">
+              잠시 쉬어가도 괜찮아요. 오늘은 자신을 다정하게 대해주세요.
+            </div>
+          </div>
+        </div>
+    
+        <div class="card-bottom">
+          <div class="fortune-info fortune-info-extended">
             <div class="fortune-item">
               <div class="fortune-label">행운의 색깔</div>
               <div class="fortune-value">
@@ -85,6 +99,7 @@
                 <span id="luckyColor">크림</span>
               </div>
             </div>
+    
             <div class="fortune-item">
               <div class="fortune-label">행운의 아이템</div>
               <div class="fortune-value">
@@ -92,9 +107,30 @@
                 <span id="luckyItem">작은 화분</span>
               </div>
             </div>
+    
+            <div class="fortune-item fortune-item-wide">
+              <div class="fortune-label">오늘 해보면 좋을 것</div>
+              <div class="fortune-value single-line-value">
+                <span class="fortune-icon" id="actionIcon">🌿</span>
+                <span id="todayAction">물 한 잔 천천히 마시기</span>
+              </div>
+            </div>
+    
+            <div class="fortune-item fortune-item-wide">
+              <div class="fortune-label">오늘 피하면 좋을 것</div>
+              <div class="fortune-value single-line-value">
+                <span class="fortune-icon" id="avoidIcon">☁️</span>
+                <span id="todayAvoid">너무 많은 비교</span>
+              </div>
+            </div>
           </div>
         </div>
+    
+        <div class="card-signature">
+          당신에게 작은 축복이 닿기를 🐾
+        </div>
       </div>
+    </div>
       <!-- ⬆️ 캡처 범위 끝 -->
 
 
