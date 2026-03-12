@@ -5,13 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>작은 축복 🎁</title>
 
-  <!-- Open Graph / Twitter (선택) -->
   <meta property="og:title" content="작은 축복 🎁" />
   <meta property="og:description" content="오늘 당신을 위한 따뜻한 랜덤 메시지와 행운의 색/아이템을 뽑아보세요." />
   <meta property="og:image" content="assets/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
 
-  <!-- 폰트 및 기본 스타일 -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -23,38 +21,38 @@
   <div class="particles" id="particles"></div>
 
   <div class="container">
-   <!-- 첫 화면 -->
-  <div class="gift-box-screen" id="giftBoxScreen">
-    <div class="header">
-      <h1 class="title">작은 축복</h1>
-      <p class="subtitle">오늘 당신을 위한 따뜻한 메시지</p>
-    </div>
-  
-    <div class="gift-box-container" id="giftBoxContainer">
-      <div class="gift-box" id="giftBox">
-        <div class="gift-ribbon-h"></div>
-        <div class="gift-ribbon-v"></div>
-        <div class="gift-bow"></div>
+    <!-- 첫 화면 -->
+    <div class="gift-box-screen" id="giftBoxScreen">
+      <div class="header">
+        <h1 class="title">작은 축복</h1>
+        <p class="subtitle">오늘 당신을 위한 따뜻한 메시지</p>
+      </div>
+
+      <div class="gift-box-container" id="giftBoxContainer">
+        <div class="gift-box" id="giftBox">
+          <div class="gift-ribbon-h"></div>
+          <div class="gift-ribbon-v"></div>
+          <div class="gift-bow"></div>
+        </div>
+      </div>
+
+      <div class="mood-section">
+        <div class="mood-title">오늘 내 마음은?</div>
+
+        <div class="mood-grid">
+          <button class="mood-button" data-mood="tired">😴 조금 지침</button>
+          <button class="mood-button" data-mood="sad">💧 괜히 울적함</button>
+          <button class="mood-button" data-mood="stress">⚡ 스트레스 많음</button>
+          <button class="mood-button" data-mood="lonely">🌙 외로운 날</button>
+          <button class="mood-button" data-mood="comfort">🐾 그냥 귀여운 위로</button>
+          <button class="mood-button" data-mood="random">🎲 아무거나 랜덤</button>
+        </div>
+
+        <button class="main-button" id="openBtn">
+          오늘의 작은 축복 받기 <span class="button-icon">🎁</span>
+        </button>
       </div>
     </div>
-  
-    <div class="mood-section">
-      <div class="mood-title">오늘 내 마음은?</div>
-  
-      <div class="mood-grid">
-        <button class="mood-button" data-mood="tired">😴 조금 지침</button>
-        <button class="mood-button" data-mood="sad">💧 괜히 울적함</button>
-        <button class="mood-button" data-mood="stress">⚡ 스트레스 많음</button>
-        <button class="mood-button" data-mood="lonely">🌙 외로운 날</button>
-        <button class="mood-button" data-mood="comfort">🐾 그냥 귀여운 위로</button>
-        <button class="mood-button" data-mood="random">🎲 아무거나 랜덤</button>
-      </div>
-  
-      <button class="main-button" id="openBtn">
-        오늘의 작은 축복 받기 <span class="button-icon">🎁</span>
-      </button>
-    </div>
-  </div>
 
     <!-- 결과 화면 -->
     <div class="result-screen" id="resultScreen">
@@ -63,79 +61,108 @@
         <p class="subtitle">오늘 당신을 위한 따뜻한 메시지</p>
       </div>
 
+      <!-- 화면에서는 상단 대표 캐릭터만 보이게 -->
       <div class="blessing-character">
-        <img src="assets/blessing_main.png" alt="복주머니" class="image_main_character" />
+        <img
+          src="assets/blessing_main.png"
+          alt="복냥이"
+          class="image_main_character"
+          id="topCharacterImage"
+        />
       </div>
 
-      <!-- ⬇️ 캡처 범위 시작 -->
+      <!-- 저장용 카드 영역 -->
       <div id="exportArea">
-      <div class="blessing-card postcard-card" id="blessingCard">
-        <div class="card-top">
-          <div class="card-mini-title">오늘의 작은 축복</div>
-          <div class="card-label" id="dateLabel">10월 20일의 작은 축복</div>
-          <div class="mood-badge" id="moodBadge">😴 조금 지친 날</div>
-        </div>
-    
-        <div class="card-middle">
-          <div class="postcard-character-wrap">
-            <img src="assets/blessing_main.png" alt="복냥이" class="image_main_character postcard-character" />
+        <div class="blessing-card postcard-card" id="blessingCard">
+          <div class="card-top">
+            <div class="card-mini-title">오늘의 작은 축복</div>
+            <div class="card-label" id="dateLabel">10월 20일의 작은 축복</div>
+            <div class="mood-badge" id="moodBadge">😴 조금 지친 날</div>
           </div>
-    
-          <div class="blessing-content">
-            <span class="blessing-emoji" id="blessingEmoji">🌙</span>
-            <div class="blessing-text" id="blessingText">오늘 하루도 정말 수고 많으셨어요.</div>
-            <div class="blessing-subtext" id="blessingSubtext">
-              잠시 쉬어가도 괜찮아요. 오늘은 자신을 다정하게 대해주세요.
+
+          <div class="card-middle">
+            <!-- 저장할 때만 보이는 카드 내부 캐릭터 -->
+            <div
+              class="postcard-character-wrap export-only"
+              id="exportCharacterWrap"
+              aria-hidden="true"
+            >
+              <img
+                src="assets/blessing_main.png"
+                alt="복냥이"
+                class="postcard-character"
+                id="exportCharacterImage"
+              />
             </div>
-          </div>
-        </div>
-    
-        <div class="card-bottom">
-          <div class="fortune-info fortune-info-extended">
-            <div class="fortune-item">
-              <div class="fortune-label">행운의 색깔</div>
-              <div class="fortune-value">
-                <span class="fortune-icon" id="colorIcon">💛</span>
-                <span id="luckyColor">크림</span>
+
+            <div class="blessing-content">
+              <span class="blessing-emoji" id="blessingEmoji">🌙</span>
+              <div class="blessing-text" id="blessingText">
+                오늘 하루도 정말 수고 많으셨어요.
               </div>
-            </div>
-    
-            <div class="fortune-item">
-              <div class="fortune-label">행운의 아이템</div>
-              <div class="fortune-value">
-                <span class="fortune-icon" id="itemIcon">🧸</span>
-                <span id="luckyItem">작은 화분</span>
-              </div>
-            </div>
-    
-            <div class="fortune-item fortune-item-wide">
-              <div class="fortune-label">오늘 해보면 좋을 것</div>
-              <div class="fortune-value single-line-value">
-                <span class="fortune-icon" id="actionIcon">🌿</span>
-                <span id="todayAction">물 한 잔 천천히 마시기</span>
-              </div>
-            </div>
-    
-            <div class="fortune-item fortune-item-wide">
-              <div class="fortune-label">오늘 피하면 좋을 것</div>
-              <div class="fortune-value single-line-value">
-                <span class="fortune-icon" id="avoidIcon">☁️</span>
-                <span id="todayAvoid">너무 많은 비교</span>
+              <div class="blessing-subtext" id="blessingSubtext">
+                잠시 쉬어가도 괜찮아요. 오늘은 자신을 다정하게 대해주세요.
               </div>
             </div>
           </div>
-        </div>
-    
-        <div class="card-signature">
-          당신에게 작은 축복이 닿기를 🐾
+
+          <div class="card-bottom">
+            <div class="fortune-info fortune-info-extended">
+              <div class="fortune-item">
+                <div class="fortune-label">행운의 색깔</div>
+                <div class="fortune-value">
+                  <span class="fortune-icon" id="colorIcon">💛</span>
+                  <span id="luckyColor">크림</span>
+                </div>
+              </div>
+
+              <div class="fortune-item">
+                <div class="fortune-label">행운의 아이템</div>
+                <div class="fortune-value">
+                  <span class="fortune-icon" id="itemIcon">🧸</span>
+                  <span id="luckyItem">작은 화분</span>
+                </div>
+              </div>
+
+              <div class="fortune-item fortune-item-wide">
+                <div class="fortune-label">오늘 해보면 좋을 것</div>
+                <div class="fortune-value single-line-value">
+                  <span class="fortune-icon" id="actionIcon">🌿</span>
+                  <span id="todayAction">물 한 잔 천천히 마시기</span>
+                </div>
+              </div>
+
+              <div class="fortune-item fortune-item-wide">
+                <div class="fortune-label">오늘 피하면 좋을 것</div>
+                <div class="fortune-value single-line-value">
+                  <span class="fortune-icon" id="avoidIcon">☁️</span>
+                  <span id="todayAvoid">너무 많은 비교</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-signature">
+            당신에게 작은 축복이 닿기를 🐾
+          </div>
         </div>
       </div>
-    </div>
-      <!-- ⬆️ 캡처 범위 끝 -->
-
 
       <div class="action-buttons">
-        <button class="action-button home-button" id="homeBtn">🏠 첫 화면으로</button>
+        <button class="action-button" id="saveBtn" type="button">
+          <span class="btn-ic">💾</span>
+          <span class="btn-txt">축복 카드 저장</span>
+        </button>
+
+        <button class="action-button" id="rerollBtn" type="button">
+          <span class="btn-ic">🎲</span>
+          <span class="btn-txt">다시 뽑기</span>
+        </button>
+
+        <button class="action-button home-button" id="homeBtn" type="button">
+          <span class="btn-ic">🏠</span>
+          <span class="btn-txt">첫 화면으로</span>
+        </button>
       </div>
 
       <div class="footer">매일매일 작은 기적이 함께하길 🌸</div>
